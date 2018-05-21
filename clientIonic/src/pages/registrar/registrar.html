@@ -1,0 +1,102 @@
+<!--
+  Generated template for the RegistrarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title text-center>Registrar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+
+
+  <form #registrarForm="ngForm" autocomplete="on" (ngSubmit)="registrar()">
+    <ion-item>
+      <ion-label>Seleccion registro</ion-label>
+      <ion-select  #rol (ionChange)="onChange(rol.value)" name="rol">
+        <ion-option value="alumno" selected>Alumno</ion-option>
+        <ion-option value="profesor">Profesor</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label required floating>Nombre</ion-label>
+        <ion-input maxlength="50" type="text" required [(ngModel)]="person.nombre" #nombre="ngModel" name="nombre"></ion-input>
+      </ion-item>
+      <small *ngIf="!nombre.valid && nombre.touched">El nombre es obligatorio o tiene un formato incorrecto</small>
+      <ion-item>
+        <ion-label floating>Apellidos</ion-label>
+        <ion-input type="text" maxlength="100" required [(ngModel)]="person.apellidos" #apellidos="ngModel" name="apellidos"></ion-input>
+      </ion-item>
+      <small *ngIf="!apellidos.valid && apellidos.touched">El apellido es obligatorio o tiene un formato incorrecto</small>
+      <ion-item>
+        <ion-label floating>Fecha Nacimieto</ion-label>
+        <ion-datetime type="date" required displayFormat="DD/MM/YYYY" [(ngModel)]="fecha" #fechaNacimiento="ngModel" name="fechaNacimiento"
+          max="2004-01-01" monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"></ion-datetime>
+      </ion-item>
+      <small *ngIf="!fechaNacimiento.valid && fechaNacimiento.touched">La fecha de nacimiento es obligatorio</small>
+      <ion-item>
+        <ion-label floating>DNI</ion-label>
+        <ion-input type="text" required maxlength="9" minlength="9" [(ngModel)]="person.dni" #dni="ngModel" name="dni"></ion-input>
+      </ion-item>
+      <small *ngIf="!dni.valid && dni.touched">El dni es obligatorio o tiene un formato incorrecto</small>
+      <ion-item>
+        <ion-label floating>Direccion</ion-label>
+        <ion-input type="text" maxlength="100" required [(ngModel)]="person.direccion" #direccion="ngModel" name="direccion"></ion-input>
+      </ion-item>
+      <small *ngIf="!direccion.valid && direccion.touched">La direccion es obligatoria o tiene un formato incorrecto</small>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" email maxlength="100" #email="ngModel" [(ngModel)]="person.email" name="email" required></ion-input>
+      </ion-item>
+      <small *ngIf="!email.valid && email.touched">El email es obligatorio o tiene un formato incorrecto</small>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input #password="ngModel" maxlength="25" [(ngModel)]="person.password" name="password" type="password" required #password="ngModel"></ion-input>
+      </ion-item>
+      <small color="danger" *ngIf="!password.valid && password.touched">La contraseña es obligatoria o tiene un formato incorrecto</small>
+      
+
+      <ion-item>
+          <ion-label floating>Repetir Contraseña</ion-label>
+          <ion-input #password="ngModel" maxlength="25" (keyup)="onKey($event)" [(ngModel)]="repetirPass" name="repetirPassword" type="password" required #repetirPassword="ngModel"></ion-input>
+       </ion-item>
+      
+      <small color="danger" *ngIf="!repetirPassword.valid && repetirPassword.touched">La contraseña es obligatoria o tiene un formato incorrecto</small>
+      <small color="danger" *ngIf="repetirPassKo">La contraseña no coinciden</small>
+      <!--Bloque alumno-->
+      <div *ngIf="role == 'alumno'">
+        <ion-item>
+          <ion-label floating>Cuenta bancaria</ion-label>
+          <ion-input #password="ngModel" [(ngModel)]="alumno.cuentaBancaria" name="cuentaBancaria" type="text" required #cuentaBancaria="ngModel"></ion-input>
+        </ion-item>
+        <small color="danger" *ngIf="!cuentaBancaria.valid && cuentaBancaria.touched">La cuenta bancaria es obligatoria</small>
+        <ion-item>
+          <ion-label floating>Salto</ion-label>
+          <ion-input max="7" min="0" #password="ngModel" [(ngModel)]="alumno.salto" name="salto" type="number" #salto="ngModel"></ion-input>
+        </ion-item>
+        <small color="danger" *ngIf="!salto.valid && salto.touched">El salto no tiene un formato correcto</small>
+        <ion-item>
+          <ion-label floating>Galope</ion-label>
+          <ion-input max="7" min="0" #password="ngModel" [(ngModel)]="alumno.galope" name="galope" type="number" #galope="ngModel"></ion-input>
+        </ion-item>
+        <small color="danger" *ngIf="!galope.valid && galope.touched">EL galope no tiene un formato correcto</small>
+      </div>
+
+      <!--Bloque profesor-->
+      <div *ngIf="role == 'profesor'">
+        <ion-item>
+          <ion-label floating>Titulacion</ion-label>
+          <ion-input #password="ngModel" [(ngModel)]="profesor.titulacion" name="titulacion" type="text" required #titulacion="ngModel"></ion-input>
+        </ion-item>
+      </div>
+    </ion-list>
+    <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!registrarForm.form.valid || repetirPassKo ">Registrar
+    </button>
+  </form>
+
+</ion-content>

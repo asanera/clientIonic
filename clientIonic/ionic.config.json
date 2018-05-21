@@ -1,0 +1,16 @@
+{
+  "name": "clientIonic",
+  "app_id": "6351fd95",
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://localhost:8080/api"
+    }
+  ],
+  "integrations": {
+    "cordova": {}
+  }
+  
+  
+}

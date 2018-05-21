@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title text-center>GACE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="mt-2">
+  <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" #email="ngModel" [(ngModel)]="personaLoguear.email" name="email" required></ion-input>
+      </ion-item>
+      <small *ngIf="!email.valid && email.touched">El email es obligatorio</small>
+      <ion-item>
+        <ion-label floating>Contraseña</ion-label>
+        <ion-input #password="ngModel" [(ngModel)]="personaLoguear.password" name="password" type="password" required #password="ngModel"></ion-input>
+      </ion-item>
+      <small color="danger" *ngIf="!password.valid && password.touched">La contraseña es obligatoria</small>
+    </ion-list>
+
+    <div padding>
+      <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!loginForm.form.valid">Acceder
+      </button>
+
+      <button ion-button color="primary" [navPush]="registrarPage" full>Registrar
+        </button>
+    </div>
+
+  </form>
+</ion-content>

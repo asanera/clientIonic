@@ -1,0 +1,33 @@
+<!--
+  Generated template for the AdminAlumnoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Alumnos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+      <ion-searchbar placeholder="Buscar alumnos" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-item *ngFor="let alumno of alumnos">
+      <div class="container">
+        <div class="infoAlumno">
+          {{ alumno.nombre }} {{alumno.apellidos}}
+        </div>
+        <div class="clear acciones">
+            <button ion-button class="col-6" (click)="detalleAlumno(alumno)">Detalles</button>
+            <button ion-button color="secondary" class="col-6" (click)="cambiarGrupo(alumno)">Cambiar grupo</button>
+        </div>
+      </div>
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>
