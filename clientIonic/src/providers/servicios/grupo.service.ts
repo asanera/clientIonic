@@ -20,6 +20,7 @@ import { Grupo } from '../../models/grupo';
 export class GrupoService{
 
   
+  
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -31,17 +32,19 @@ export class GrupoService{
     })
     this.options = new RequestOptions({ headers: this.headers });
   }
-  obtenerGrupoByNombre(nombre) {
+  obtenerGrupoById(id) {
     //Peticion al backen
-    return this.http.get(this.url + 'grupo/'+nombre,this.options).map(res => res.json());
+    return this.http.get(this.url + 'grupo/'+id,this.options).map(res => res.json());
 
   }
   obtenerGrupos(){
     //Peticion al backen
     return this.http.get(this.url + 'grupos',
       this.options).map(res => res.json());
-
   }
- 
-  
+  borrarGrupo(grupo: Grupo){
+    //Peticion al backen
+    return this.http.post(this.url + 'grupo/delete',grupo,
+      this.options).map(res => res.json());
+  }  
 }

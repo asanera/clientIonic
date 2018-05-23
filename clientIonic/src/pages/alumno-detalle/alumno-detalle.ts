@@ -21,14 +21,15 @@ import { AlumnoService } from '../../providers/servicios/alumno.service';
 })
 export class AlumnoDetallePage {
   public alumno: Alumno;
-  public grupo: Grupo;
+  public id: Number;
+  grupo: Grupo;
   public grupos: Grupo[];
   public cambiar: Boolean;
   constructor(public toastCtrl: ToastController, public grupoService: GrupoService, public alumnoService: AlumnoService, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
     this.alumno = navParams.get('alumno');
     this.cambiar = navParams.get('cambiar');
-    this.grupo = this.alumno.grupos[this.alumno.grupos.length - 1];
-    (this.alumno);
+    this.id;
+    this.grupo;
     this.obtenerGrupos();
   }
   dismiss() {
@@ -39,19 +40,19 @@ export class AlumnoDetallePage {
       response => {
         this.grupos = response;
         if (this.grupos.length == 0) {
-          this.mostrarError("Actualmente no hay grupos");
+          this.lanzarToach("Actualmente no hay grupos");
         }
       }, error => {
         var capturaError = <any>error;
         if (capturaError != null) {
           var body = JSON.parse(error._body);
-          this.mostrarError(body.error);
-          this.mostrarError(error);
+          this.lanzarToach(body.error);
+          this.lanzarToach(error);
         }
       }
     );
   }
-  mostrarError(mensaje) {
+  lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({
       message: mensaje,
       duration: 3000,
@@ -61,36 +62,49 @@ export class AlumnoDetallePage {
   }
 
   actualizarAlumnoGrupo() {
-    let error: boolean = false;
-    this.grupoService.obtenerGrupoByNombre(this.grupo).subscribe(
-      response => {
-        this.grupo = response;
-        console.log(response);
-      }, error => {
-        this.mostrarError("Ha ocurrido un error inesperado, intentelo más tade");
-        error = true;
-      }
-    );
-    if (error)
-      return;
-    this.alumno.grupos.push(this.grupo);
 
-    this.alumnoService.actualizarAlumno(this.alumno).subscribe(
+    let grupo: Grupo = null;
+    this.grupoService.obtenerGrupoById(this.id).subscribe(
       response => {
-        this.alumno = response;
-        console.log(this.alumno);
-        if (this.alumno != null) {
-          this.mostrarError("Se ha añadido el grupo correctamente");
-        }
-      }, error => {
+        grupo = response;
+        this.alumno.grupo = grupo;
+        this.alumnoService.actualizarAlumnoGrupo(this.alumno).subscribe(
+          response => {
+            this.alumno = response;
+            this.lanzarToach("Se ha añadido el grupo correctamente");
+          }, error => {
+            var capturaError = <any>error;
+            var errorCodigo;
+            if (capturaError != null) {
+              var body = JSON.parse(error._body);
+              errorCodigo = body.codigo;
+              if (errorCodigo == 1100)
+                this.lanzarToach(body.error);
+              else
+                this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
+            }
+          }
+        );
+      }
+      , error => {
         var capturaError = <any>error;
+        var errorCodigo;
         if (capturaError != null) {
           var body = JSON.parse(error._body);
-          this.mostrarError(body.error);
-          this.mostrarError(error);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
+          return false;
         }
       }
-    );
-  }
+    )
 
+  }
+  onSelectChange(selectedValue: Number) {
+    this.id = selectedValue;
+    console.log(this.id);
+  }
 }
+

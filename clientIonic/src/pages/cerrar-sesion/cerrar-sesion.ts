@@ -21,9 +21,6 @@ export class CerrarSesionPage {
     this.nombre =navParams.get('nombre');
   }
 
-  ionViewDidLoad() {
-    
-  }
   dismiss() {
     this.viewCtrl.dismiss();
   }

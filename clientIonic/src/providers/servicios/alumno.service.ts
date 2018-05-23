@@ -8,6 +8,8 @@ import 'rxjs/add/operator/map';
 
 // sirve para recoger las respuestas de las peticiones ajax al servidor
 import { Observable } from 'rxjs/Observable';
+import { Alumno } from '../../models/alumno';
+import { Grupo } from '../../models/grupo';
 
 /*
   Generated class for the ServiciosProvider provider.
@@ -17,7 +19,6 @@ import { Observable } from 'rxjs/Observable';
 */
 @Injectable()
 export class AlumnoService{
-
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -34,13 +35,16 @@ export class AlumnoService{
     //Peticion al backen
     return this.http.get(this.url + 'alumnos',
       this.options).map(res => res.json());
-
   }
-  actualizarAlumno(alumno){
+  actualizarAlumnoGrupo(alumno){
      //Peticion al backen
-     (alumno);
      return this.http.post(this.url + 'alumno/grupo',alumno,
      this.options).map(res => res.json());
+  }
+
+  obtenerAlumnosGrupos(id: Number) {
+    return this.http.get(this.url + 'alumnos/grupo/'+id,
+    this.options).map(res => res.json());
   }
  
   

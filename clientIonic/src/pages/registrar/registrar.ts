@@ -37,50 +37,78 @@ export class RegistrarPage {
     this.fecha = new Date();
 
   }
-  onChange(value){
-     this.role = value;
-     (this.role);
+  onChange(value) {
+    this.role = value;
   }
 
   registrar() {
     (this.role);
     if (this.role == "alumno") {
-      ("entro en alumno");
       this.registrarAlumno();
     } else {
-      ("entro");
       this.registrarProfesor();
     }
   }
   registrarAlumno() {
-    this.validarDatosAlumno();
-    this.alumno.nombre = this.person.nombre;
-    this.alumno.apellidos = this.person.apellidos;
-    this.alumno.direccion = this.person.direccion;
-    this.alumno.fechaNacimiento = this.fecha;
-    this.alumno.dni = this.person.dni;
-    this.alumno.email = this.person.email;
-    this.alumno.password = this.person.password;
-    this.registrarAlumnoServiceImpl();
+    if (this.validacionComun()) {
+      if (this.validarDatosAlumno()) {
+        this.alumno.nombre = this.person.nombre;
+        this.alumno.apellidos = this.person.apellidos;
+        this.alumno.direccion = this.person.direccion;
+        this.alumno.fechaNacimiento = this.fecha;
+        this.alumno.dni = this.person.dni;
+        this.alumno.email = this.person.email;
+        this.alumno.password = this.person.password;
+        this.registrarAlumnoServiceImpl();
+      }
+    }
+
   }
   validarDatosAlumno() {
     //Validar dni
+    let salto = Number.parseInt(this.alumno.salto.toString().replace('"', ""));
+    let galope = Number.parseInt(this.alumno.galope.toString().replace('"', ""));
+    if (!Number.isInteger(galope) || !Number.isInteger(salto)) {
+      this.crearToast("Salto o Galope no es un numero");
+      return false
+    } else {
+      if (this.alumno.salto < 0 || this.alumno.salto > 7 || this.alumno.galope < 0 || this.alumno.galope > 7) {
+        this.crearToast("Salto o Galope es menor de 0 o mayor de 7");
+        return false;
+      }
+    }
     return true;
-
+  }
+  validacionComun() {
+    if (this.person.nombre.length < 3) {
+      this.crearToast("El nombre tiene que ser mayor de 3 caracteres");
+      return false
+    } else if (this.person.fechaNacimiento == null) {
+      this.crearToast("Debes de colocar una fecha de nacimiento");
+      return false
+    }
+    else if (this.person.apellidos.length < 3) {
+      this.crearToast("Los apellidos tienen que ser mayor de 3 caracteres");
+      return false
+    } else if (this.person.direccion.length < 3) {
+      this.crearToast("La direccion tiene que ser mayor de 3 caracteres");
+      return false
+    } else if (this.person.password.length < 3) {
+      this.crearToast("La contraseña tiene que ser mayor de 3 caracteres");
+      return false
+    }
+    return true;
   }
 
   registrarAlumnoServiceImpl() {
     this.registrarService.registrarAlumno(this.alumno).subscribe(
       //Bloque Alumno
       response => {
-        (this.alumno);
         let alumnoResponse = response;
         this.crearToast("Te has registrado correctamente");
-        this.navCtrl.push(LoginPage)
-        this.sleep(2000);
+        this.navCtrl.push(LoginPage);
         return true;
       }, error => {
-        (error);
         this.mostrarError(error);
       }
 
@@ -88,11 +116,11 @@ export class RegistrarPage {
   }
   sleep(miliseconds) {
     var currentTime = new Date().getTime();
- 
+
     while (currentTime + miliseconds >= new Date().getTime()) {
     }
- }
-   mostrarError(error) {
+  }
+  mostrarError(error) {
     let capturaError = <any>error;
     let errorCodigo;
     let body;
@@ -107,18 +135,18 @@ export class RegistrarPage {
 
   }
   registrarProfesor() {
-    this.profesor.nombre = this.person.nombre;
-    this.profesor.apellidos = this.person.apellidos;
-    this.profesor.direccion = this.person.direccion;
-    this.profesor.fechaNacimiento = this.fecha;
-    this.profesor.dni = this.person.dni;
-    this.profesor.email = this.person.email;
-    this.profesor.password = this.person.password;
-    (this.alumno);
-
-    this.registrarPrfesorServiceImpl();
+    if (this.validacionComun()) {
+      this.profesor.nombre = this.person.nombre;
+      this.profesor.apellidos = this.person.apellidos;
+      this.profesor.direccion = this.person.direccion;
+      this.profesor.fechaNacimiento = this.fecha;
+      this.profesor.dni = this.person.dni;
+      this.profesor.email = this.person.email;
+      this.profesor.password = this.person.password;
+      this.registrarPrfesorServiceImpl();
+    }
   }
-  registrarPrfesorServiceImpl(){
+  registrarPrfesorServiceImpl() {
     this.registrarService.registrarProfesor(this.profesor).subscribe(
       //Bloque Alumno
       response => {
@@ -128,7 +156,6 @@ export class RegistrarPage {
         this.sleep(2000);
         return true;
       }, error => {
-        (error);
         this.mostrarError(error);
       }
 

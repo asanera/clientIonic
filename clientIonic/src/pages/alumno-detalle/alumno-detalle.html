@@ -61,7 +61,7 @@
   <ion-item>
       <h2>Grupo:</h2>
       <ion-note text-wrap>
-        {{grupo.nombre}}
+        {{alumno.grupo.nombre}}
       </ion-note>
     </ion-item>
   <ion-item>
@@ -94,8 +94,8 @@
 
     <ion-item>
         <ion-label>Grupo</ion-label>
-        <ion-select [(ngModel)]="grupo">
-          <ion-option *ngFor="let grupo of grupos" value="{{grupo.nombre}}">{{grupo.nombre}}</ion-option>
+        <ion-select [ngModel]="grupo" (ionChange)="onSelectChange($event)">
+          <ion-option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.nombre}}</ion-option>
         </ion-select>
       </ion-item>
       <button ion-button color="secondary" (click)="actualizarAlumnoGrupo()">Guardar</button>

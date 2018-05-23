@@ -24,6 +24,8 @@ import { AdminAlumnoPage } from '../pages/admin-alumno/admin-alumno';
 import { AdminProfesorPage } from '../pages/admin-profesor/admin-profesor';
 import { AdminPistaPage } from '../pages/admin-pista/admin-pista';
 import { AlumnoDetallePage } from '../pages/alumno-detalle/alumno-detalle';
+import { GrupoDetalleAlumnoPage } from '../pages/grupo-detalle-alumno/grupo-detalle-alumno';
+import { GrupoPage } from '../pages/grupo/grupo';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,10 @@ import { AlumnoDetallePage } from '../pages/alumno-detalle/alumno-detalle';
     AdminAlumnoPage,
     AdminProfesorPage,
     AdminPistaPage,
-    AlumnoDetallePage
+    AlumnoDetallePage,
+    GrupoDetalleAlumnoPage,
+    GrupoPage
+
   ],
   imports: [
     BrowserModule,
@@ -69,7 +74,9 @@ import { AlumnoDetallePage } from '../pages/alumno-detalle/alumno-detalle';
     AdminAlumnoPage,
     AdminProfesorPage,
     AdminPistaPage,
-    AlumnoDetallePage
+    AlumnoDetallePage,
+    GrupoDetalleAlumnoPage,
+    GrupoPage
   ],
   providers: [
     StatusBar,

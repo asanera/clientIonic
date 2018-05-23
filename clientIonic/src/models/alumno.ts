@@ -12,7 +12,7 @@ export class Alumno extends Person {
         public cuentaBancaria: string,
         public pagos: Pago[],
         public asignaciones:Asignacion[],
-        public grupos: Grupo[],
+        public grupo: Grupo,
         public nombre: string,
         public apellidos: string,
         public dni: string,

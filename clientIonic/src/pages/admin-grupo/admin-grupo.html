@@ -7,12 +7,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>admin-grupo</ion-title>
+    <ion-title>Grupos</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let grupo of grupos">
+      <div class="container">
+        <div class="infoGrupo">
+          {{ grupo.nombre }}
+        </div>
+        <div class="clear acciones">
+            <button ion-button class="col-6" (click)="grupoAlumnos(grupo.id)">Ver Alumnos</button>
+            <button ion-button color="danger" class="col-6" (click)="borrarGrupo()">Borrar</button>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

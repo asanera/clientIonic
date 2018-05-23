@@ -5,7 +5,7 @@ export class Grupo extends BaseEntity {
     constructor(
         public id:number,
         public nombre:string,
-        public alumnos: Alumno
+        public alumnos: Alumno[]
     ){
         super(id);
     }
