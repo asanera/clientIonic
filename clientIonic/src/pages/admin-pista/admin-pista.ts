@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+import { Pista } from '../../models/pista';
+import { PistaService } from '../../providers/servicios/pista.service';
+import { PistaDetallePage } from '../pista-detalle/pista-detalle';
 
 /**
  * Generated class for the AdminPistaPage page.
@@ -12,14 +15,46 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-admin-pista',
   templateUrl: 'admin-pista.html',
+  providers: [PistaService]
 })
 export class AdminPistaPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  pistas: Pista[];
+  constructor(public pistaService: PistaService, public toastCtrl: ToastController, public viewCtrl: ViewController,
+    public navCtrl: NavController, public navParams: NavParams) {
+    this.obtenerPistar();
   }
-
-  ionViewDidLoad() {
-    ('ionViewDidLoad AdminPistaPage');
+  obtenerPistar() {
+    this.pistaService.obtenerPistas().subscribe(
+      response => {
+        this.pistas = response;
+      }, error => {
+        var capturaError = <any>error;
+        var errorCodigo;
+        if (capturaError != null) {
+          var body = JSON.parse(error._body);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
+          return false;
+        }
+      }
+    );
+  }
+  actualizar(pista:Pista){
+    this.navCtrl.push(PistaDetallePage, {nuevo: false, pista: pista});
+  }
+  anadir(){
+    this.navCtrl.push(PistaDetallePage, {nuevo: true});
+  }
+  lanzarToach(mensaje) {
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: 3000,
+      dismissOnPageChange: true
+    });
+    toast.present();
   }
 
 }

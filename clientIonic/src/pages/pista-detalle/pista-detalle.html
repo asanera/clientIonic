@@ -1,0 +1,36 @@
+<!--
+  Generated template for the PistaDetallePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Pistas
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancelar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form #pistaForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Nombre</ion-label>
+        <ion-input type="text" #nombre="ngModel" [(ngModel)]="pista.nombre" name="nombre" required></ion-input>
+      </ion-item>
+      <small *ngIf="!nombre.valid && nombre.touched">El nombre es obligatorio</small>
+    </ion-list>
+
+    <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!pistaForm.form.valid">Enviar
+    </button>
+  </form>
+
+</ion-content>

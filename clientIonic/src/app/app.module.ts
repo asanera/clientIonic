@@ -26,6 +26,7 @@ import { AdminPistaPage } from '../pages/admin-pista/admin-pista';
 import { AlumnoDetallePage } from '../pages/alumno-detalle/alumno-detalle';
 import { GrupoDetalleAlumnoPage } from '../pages/grupo-detalle-alumno/grupo-detalle-alumno';
 import { GrupoPage } from '../pages/grupo/grupo';
+import { PistaDetallePage } from '../pages/pista-detalle/pista-detalle';
 
 @NgModule({
   declarations: [
@@ -47,8 +48,8 @@ import { GrupoPage } from '../pages/grupo/grupo';
     AdminPistaPage,
     AlumnoDetallePage,
     GrupoDetalleAlumnoPage,
-    GrupoPage
-
+    GrupoPage,
+    PistaDetallePage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +77,8 @@ import { GrupoPage } from '../pages/grupo/grupo';
     AdminPistaPage,
     AlumnoDetallePage,
     GrupoDetalleAlumnoPage,
-    GrupoPage
+    GrupoPage,
+    PistaDetallePage
   ],
   providers: [
     StatusBar,

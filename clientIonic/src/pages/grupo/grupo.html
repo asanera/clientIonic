@@ -1,18 +1,22 @@
-<!--
-  Generated template for the GrupoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>grupo</ion-title>
-  </ion-navbar>
-
+  <ion-toolbar>
+    <ion-title>
+      Añadir Grupo
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
-
-<ion-content padding>
+<ion-content>
+  <form #grupoForm="ngForm" (ngSubmit)="guardarGrupo()" autocomplete="off">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Nombre</ion-label>
+        <ion-input type="text" #nombre="ngModel" [(ngModel)]="grupo.nombre" name="nombre" required></ion-input>
+      </ion-item>
+      <small *ngIf="!nombre.valid && nombre.touched">El nombre es obligatorio</small>
+    </ion-list>
+    <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!grupoForm.form.valid">Guardar
+    </button>
+  </form>
 
 </ion-content>

@@ -8,16 +8,12 @@ import 'rxjs/add/operator/map';
 
 // sirve para recoger las respuestas de las peticiones ajax al servidor
 import { Observable } from 'rxjs/Observable';
+import { Alumno } from '../../models/alumno';
 import { Grupo } from '../../models/grupo';
+import { Pista } from '../../models/pista';
 
-/*
-  Generated class for the ServiciosProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
-export class GrupoService{
+export class PistaService{
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -29,24 +25,15 @@ export class GrupoService{
     })
     this.options = new RequestOptions({ headers: this.headers });
   }
-  obtenerGrupoById(id) {
+  obtenerPistas() {
     //Peticion al backen
-    return this.http.get(this.url + 'grupo/'+id,this.options).map(res => res.json());
-
-  }
-  obtenerGrupos(){
-    //Peticion al backen
-    return this.http.get(this.url + 'grupos',
+    return this.http.get(this.url + 'pistas',
       this.options).map(res => res.json());
   }
-  borrarGrupo(grupo: Grupo){
+  anadirActualiza(pista: Pista) {
     //Peticion al backen
-    return this.http.post(this.url + 'grupo/delete',grupo,
-      this.options).map(res => res.json());
-  }  
-  guardarGrupo(grupo: Grupo) {
-    //Peticion al backen
-    return this.http.post(this.url + 'grupo',grupo,
+    return this.http.post(this.url + 'pista', pista,
       this.options).map(res => res.json());
   }
+  
 }

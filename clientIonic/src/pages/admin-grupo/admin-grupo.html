@@ -21,11 +21,15 @@
           {{ grupo.nombre }}
         </div>
         <div class="clear acciones">
-            <button ion-button class="col-6" (click)="grupoAlumnos(grupo.id)">Ver Alumnos</button>
-            <button ion-button color="danger" class="col-6" (click)="borrarGrupo()">Borrar</button>
+          <button ion-button class="col-6" (click)="grupoAlumnos(grupo.id)">Ver Alumnos</button>
+          <button ion-button color="danger" class="col-6" (click)="borrarGrupo(grupo)">Borrar</button>
         </div>
       </div>
     </ion-item>
   </ion-list>
-
+    <ion-fab bottom right>
+      <button ion-fab color="danger" (click)="anadirGrupo()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
 </ion-content>

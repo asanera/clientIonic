@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, ToastController }
 import { GrupoService } from '../../providers/servicios/grupo.service';
 import { GrupoDetalleAlumnoPage } from '../grupo-detalle-alumno/grupo-detalle-alumno';
 import { Grupo } from '../../models/grupo'
+import { GrupoPage } from '../grupo/grupo';
 /**
  * Generated class for the AdminGrupoPage page.
  *
@@ -45,6 +46,7 @@ export class AdminGrupoPage {
   }
 
   borrarGrupo(grupo) {
+    console.log(grupo);
     let modal = this.modalCtrl.create(GrupoDetalleAlumnoPage, { grupo: grupo, mostrarAlumnos: false });
     modal.present();
   }
@@ -52,6 +54,9 @@ export class AdminGrupoPage {
     console.log("entro");
     let modal = this.modalCtrl.create(GrupoDetalleAlumnoPage, { idGrupo: id, mostrarAlumnos: true });
     modal.present();
+  }
+  anadirGrupo(){
+    this.navCtrl.push(GrupoPage);
   }
 
   mostrarError(mensaje) {

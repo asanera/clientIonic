@@ -7,12 +7,29 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>admin-pista</ion-title>
+    <ion-title>Pistas</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+  <ion-item *ngFor="let pista of pistas">
+    <div class="container">
+      <div class="infoPistas">
+        {{ pista.nombre }}
+      </div>
+      <div class="clear acciones">
+          <button ion-button color="secondary" class="col-6" (click)="actualizar(pista)">Actualizar</button>
+          <button ion-button color="danger" class="col-6" (click)="actualizar(pista)">Eliminar</button>
+      </div>
+    </div>
+  </ion-item>
+</ion-list>
+<ion-fab bottom right>
+  <button ion-fab color="danger" (click)="anadir()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>
 </ion-content>
