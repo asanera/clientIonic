@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController, ModalController } from 'ionic-angular';
 import { Pista } from '../../models/pista';
 import { PistaService } from '../../providers/servicios/pista.service';
 import { PistaDetallePage } from '../pista-detalle/pista-detalle';
+import { PistaModalPage } from '../pista-modal/pista-modal';
 
 /**
  * Generated class for the AdminPistaPage page.
@@ -19,7 +20,7 @@ import { PistaDetallePage } from '../pista-detalle/pista-detalle';
 })
 export class AdminPistaPage {
   pistas: Pista[];
-  constructor(public pistaService: PistaService, public toastCtrl: ToastController, public viewCtrl: ViewController,
+  constructor(public modalCtrl: ModalController, public pistaService: PistaService, public toastCtrl: ToastController, public viewCtrl: ViewController,
     public navCtrl: NavController, public navParams: NavParams) {
     this.obtenerPistar();
   }
@@ -42,11 +43,15 @@ export class AdminPistaPage {
       }
     );
   }
-  actualizar(pista:Pista){
-    this.navCtrl.push(PistaDetallePage, {nuevo: false, pista: pista});
+  actualizar(pista: Pista) {
+    this.navCtrl.push(PistaDetallePage, { nuevo: false, pista: pista });
   }
-  anadir(){
-    this.navCtrl.push(PistaDetallePage, {nuevo: true});
+  borrar(pista: Pista) {
+    let modal = this.modalCtrl.create(PistaModalPage, { pista: pista});
+    modal.present();
+  }
+  anadir() {
+    this.navCtrl.push(PistaDetallePage, { nuevo: true });
   }
   lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({

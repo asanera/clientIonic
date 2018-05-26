@@ -22,7 +22,7 @@
   <ion-item>
     <h2>Nombre:</h2>
     <ion-note text-wrap>
-      {{alumno.nombre}}
+      <p>{{alumno.nombre}}</p>
     </ion-note>
   </ion-item>
 
@@ -35,45 +35,48 @@
   <ion-item>
     <h2>Fecha Nacimiento:</h2>
     <ion-note text-wrap>
-      {{alumno.fechaNacimiento}}
+      <p>{{alumno.fechaNacimiento}}</p>
     </ion-note>
   </ion-item>
 
   <ion-item>
     <h2>DNI:</h2>
     <ion-note text-wrap>
-      {{alumno.dni}}
+      <p>{{alumno.dni}}</p>
     </ion-note>
   </ion-item>
 
   <ion-item>
     <h2>Direccion:</h2>
     <ion-note text-wrap>
-      {{alumno.direccion}}
+      <p>{{alumno.direccion}}</p>
     </ion-note>
   </ion-item>
   <ion-item>
     <h2>Email:</h2>
     <ion-note text-wrap>
-      {{alumno.email}}
+    <p>{{alumno.email}}</p>
     </ion-note>
   </ion-item>
   <ion-item>
       <h2>Grupo:</h2>
-      <ion-note text-wrap>
-        {{alumno.grupo.nombre}}
+      <ion-note text-wrap *ngIf="alumno.grupo != null">
+       <p> {{alumno.grupo.nombre}}</p>
+      </ion-note>
+      <ion-note text-wrap *ngIf="alumno.grupo == null">
+        <p>Actualmente no esta asociado a un grupo</p>
       </ion-note>
     </ion-item>
   <ion-item>
     <h2>Salto:</h2>
     <ion-note text-wrap>
-      {{alumno.salto}}
+      <p>{{alumno.salto}}</p>
     </ion-note>
   </ion-item>
   <ion-item>
     <h2>Galope:</h2>
     <ion-note text-wrap>
-      {{alumno.galope}}
+      <p>{{alumno.galope}}</p>
     </ion-note>
   </ion-item>
 </ion-content>
@@ -82,7 +85,7 @@
     <ion-item>
       <h2>Nombre:</h2>
       <ion-note text-wrap>
-        {{alumno.nombre}}
+        <p>{{alumno.nombre}}</p>
       </ion-note>
     </ion-item>
     <ion-item>

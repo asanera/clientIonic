@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Eliminar
+      Gestion de grupos
     </ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
@@ -14,7 +14,7 @@
 
 <ion-content>
   <div *ngIf="!mostrarAlumno">
-    <h2 tex-center>¿Estas seguro de que deseas eliminar este grupo?</h2>
+    <h2 tex-center>¿Estas seguro de que deseas eliminar el grupo {{grupo.nombre}}?</h2>
     <ion-grid text-center>
       <button class="m-auto" ion-button color="secondary" (click)="borrarGrupo()">Aceptar</button>
       <button class="m-auto" ion-button color="danger" (click)="dismiss()">Cancelar</button>

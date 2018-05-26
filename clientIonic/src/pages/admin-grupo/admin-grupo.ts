@@ -56,7 +56,10 @@ export class AdminGrupoPage {
     modal.present();
   }
   anadirGrupo(){
-    this.navCtrl.push(GrupoPage);
+    this.navCtrl.push(GrupoPage,{nuevo:false});
+  }
+  actualizar(grupo){
+    this.navCtrl.push(GrupoPage,{nuevo:false, grupo:grupo});
   }
 
   mostrarError(mensaje) {

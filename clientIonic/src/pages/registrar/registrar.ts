@@ -83,8 +83,9 @@ export class RegistrarPage {
     if (this.person.nombre.length < 3) {
       this.crearToast("El nombre tiene que ser mayor de 3 caracteres");
       return false
-    } else if (this.person.fechaNacimiento == null) {
+    } else if (this.fecha == null) {
       this.crearToast("Debes de colocar una fecha de nacimiento");
+      console.log(this.person);
       return false
     }
     else if (this.person.apellidos.length < 3) {
@@ -114,12 +115,8 @@ export class RegistrarPage {
 
     );
   }
-  sleep(miliseconds) {
-    var currentTime = new Date().getTime();
+  
 
-    while (currentTime + miliseconds >= new Date().getTime()) {
-    }
-  }
   mostrarError(error) {
     let capturaError = <any>error;
     let errorCodigo;
@@ -150,11 +147,8 @@ export class RegistrarPage {
     this.registrarService.registrarProfesor(this.profesor).subscribe(
       //Bloque Alumno
       response => {
-        (this.profesor);
         this.crearToast("Te has registrado correctamente");
         this.navCtrl.push(LoginPage)
-        this.sleep(2000);
-        return true;
       }, error => {
         this.mostrarError(error);
       }

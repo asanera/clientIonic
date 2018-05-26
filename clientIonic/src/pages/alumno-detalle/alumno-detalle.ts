@@ -62,8 +62,12 @@ export class AlumnoDetallePage {
   }
 
   actualizarAlumnoGrupo() {
-
     let grupo: Grupo = null;
+    if(this.id==null){
+      this.lanzarToach("Por favor, debes de seleccionar un grupo");
+      return false;
+    }
+      
     this.grupoService.obtenerGrupoById(this.id).subscribe(
       response => {
         grupo = response;
@@ -71,7 +75,7 @@ export class AlumnoDetallePage {
         this.alumnoService.actualizarAlumnoGrupo(this.alumno).subscribe(
           response => {
             this.alumno = response;
-            this.lanzarToach("Se ha añadido el grupo correctamente");
+            this.lanzarToach("La operación ha sido todo un éxito");
           }, error => {
             var capturaError = <any>error;
             var errorCodigo;

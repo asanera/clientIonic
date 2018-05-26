@@ -14,6 +14,7 @@ import { Pista } from '../../models/pista';
 
 @Injectable()
 export class PistaService{
+ 
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -35,5 +36,11 @@ export class PistaService{
     return this.http.post(this.url + 'pista', pista,
       this.options).map(res => res.json());
   }
+  borrar(pista: Pista){
+    //Peticion al backen
+    return this.http.post(this.url + 'pista/borrar', pista,
+      this.options).map(res => res.json());
+  }
+
   
 }

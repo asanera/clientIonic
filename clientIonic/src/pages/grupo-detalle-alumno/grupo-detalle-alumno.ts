@@ -33,7 +33,6 @@ export class GrupoDetalleAlumnoPage {
     }
     else
       this.grupo = navParams.get('grupo');
-      console.log(this.grupo);
   }
   alumnoAsociadosGrupo(){
     this.alumnoService.obtenerAlumnosGrupos(this.idGrupo).subscribe(
@@ -60,7 +59,7 @@ export class GrupoDetalleAlumnoPage {
     this.viewCtrl.dismiss();
   }
   borrarGrupo() {
-    console.log(this.grupo);
+
     this.grupoService.borrarGrupo(this.grupo).subscribe(
       response => {
         this.navCtrl.push(AdminGrupoPage);

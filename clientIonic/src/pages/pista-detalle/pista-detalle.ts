@@ -24,7 +24,7 @@ export class PistaDetallePage {
   nuevo: Boolean;
   constructor(public pistaService: PistaService, public toastCtrl: ToastController, public viewCtrl: ViewController,
     public navCtrl: NavController, public navParams: NavParams) {
-      this.nuevo = this.navParams.get('nuevo');
+    this.nuevo = this.navParams.get('nuevo');
     if (this.nuevo)
       this.pista = new Pista(-1, '');
     else
@@ -68,7 +68,7 @@ export class PistaDetallePage {
         if (this.pista == null)
           this.lanzarToach("La pista no se ha añadido correctamente");
         else
-        this.navCtrl.push(AdminPistaPage);
+          this.navCtrl.push(AdminPistaPage);
       }, error => {
         var capturaError = <any>error;
         var errorCodigo;

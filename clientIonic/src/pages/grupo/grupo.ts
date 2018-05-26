@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Grupo } from '../../models/grupo';
 import { GrupoService } from '../../providers/servicios/grupo.service';
+import { AdminGrupoPage } from '../admin-grupo/admin-grupo';
 
 /**
  * Generated class for the GrupoPage page.
@@ -20,8 +21,13 @@ import { GrupoService } from '../../providers/servicios/grupo.service';
 export class GrupoPage {
 
   grupo: Grupo;
-  constructor(public grupoService: GrupoService,public toastCtrl: ToastController,public navCtrl: NavController, public navParams: NavParams) {
-    this.grupo = new Grupo(-1,"",null);
+  nuevo: Boolean;
+  constructor(public grupoService: GrupoService, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
+    this.nuevo = this.navParams.get('nuevo');
+    if (this.nuevo)
+      this.grupo = new Grupo(-1, "", null);
+    else
+      this.grupo = this.navParams.get('grupo');
   }
 
   guardarGrupo() {
@@ -29,11 +35,10 @@ export class GrupoPage {
     this.grupoService.guardarGrupo(this.grupo).subscribe(
       response => {
         let grupo = response;
-        console.log(grupo);
         if (this.grupo == null)
           this.lanzarToast("Lo sentimos, el grupo no se ha guarado correctamente");
         else
-        this.lanzarToast("El grupo se ha guardado correctamente");
+          this.lanzarToast("El grupo se ha guardado correctamente");
       }, error => {
         let capturaError = <any>error;
         let errorCodigo;
@@ -48,7 +53,7 @@ export class GrupoPage {
         }
       }
     );
-    this.grupo = new Grupo(-1,"",null);
+
   }
   lanzarToast(mensaje) {
     let toast = this.toastCtrl.create({
