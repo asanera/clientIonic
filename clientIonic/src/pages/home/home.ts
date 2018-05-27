@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { Clase } from '../../models/clase';
 import { Profesor } from '../../models/profesor';
 import { Alumno } from '../../models/alumno';
@@ -7,6 +7,8 @@ import { AuthService } from '../../providers/servicios/auth.service';
 import { ClaseService } from '../../providers/servicios/clases.service';
 import { ClaseDetallePage } from '../clase-detalle/clase-detalle';
 import { LoginPage } from '../login/login';
+import { ClasesAnadirPage } from '../clases-anadir/clases-anadir';
+import { Grupo } from '../../models/grupo';
 
 @Component({
   selector: 'page-home',
@@ -23,7 +25,7 @@ export class HomePage {
   public alerts: Array<any> = [];
   public segment;
 
-  constructor(public modalCtrl: ModalController, public navCtrl: NavController, private authService: AuthService, private claseService: ClaseService) {
+  constructor(public toastCtrl: ToastController,public modalCtrl: ModalController, public navCtrl: NavController, private authService: AuthService, private claseService: ClaseService) {
     this.identidadAlumno = authService.getAlumno();
     this.identidadProfesor = authService.getProfesor();
     this.segment = "proximas";
@@ -52,7 +54,7 @@ export class HomePage {
         }
       }, () => {
         if (!this.clases) {
-          ("no hay clases")
+          this.lanzarToach("Actualmente no tienes ninguna clase")
         } else {
           this.clasesAlumno = this.obtenerClasesAlumno(this.clases);
         }
@@ -72,7 +74,7 @@ export class HomePage {
         }
       }, () => {
         if (!this.clases) {
-
+            this.lanzarToach("Actualmente no has creado ninguna clase")
         } else {
           this.clasesProfesor = this.obtenerClasesProfesor(this.clases);
         }
@@ -90,7 +92,10 @@ export class HomePage {
       especialidad = clase.especialidad;
       pista = clase.pista.nombre;
       fecha = clase.fecha;
-      grupo = clase.asignaciones[0].alumno.grupo.nombre;
+      if (clase.asignaciones.length != 0)
+        grupo = clase.asignaciones[0].alumno.grupo.nombre;
+      else
+        grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
 
       clasesProfesor.push({
         nombre: nombre,
@@ -160,5 +165,16 @@ export class HomePage {
       }
     }
 
+  }
+  anadir() {
+    this.navCtrl.push(ClasesAnadirPage, { nuevo: true });
+  }
+  lanzarToach(mensaje) {
+    let toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: 3000,
+      dismissOnPageChange: true
+    });
+    toast.present();
   }
 }

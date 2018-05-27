@@ -7,11 +7,13 @@ import 'rxjs/add/operator/map';
 
 // sirve para recoger las respuestas de las peticiones ajax al servidor
 import { Observable } from 'rxjs/Observable';
+import { Clase } from '../../models/clase';
 
 
 @Injectable()
 export class ClaseService {
 
+  
     private url = "http://localhost:8080/api/";
     private headers;
     private options;
@@ -32,6 +34,10 @@ export class ClaseService {
     }
     public obtenerFuturasClasesPorProfesor(idProfesor:number){
         return this.http.get(this.url + 'clases/profesor/'+idProfesor,
+        this.options).map(res => res.json());
+    }
+    guardar(clase: Clase, idGrupo: Number) {
+      return this.http.post(this.url + 'clase/'+idGrupo,clase,
         this.options).map(res => res.json());
     }
     

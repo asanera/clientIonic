@@ -34,7 +34,7 @@ export class RegistrarPage {
     this.repetirPass = '';
     this.repetirPassKo = false;
     this.registroCorrecto = false;
-    this.fecha = new Date();
+    this.fecha;
 
   }
   onChange(value) {

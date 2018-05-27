@@ -1,0 +1,67 @@
+<!--
+  Generated template for the ClasesAnadirPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Clases</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <form #claseForm="ngForm" autocomplete="on" (ngSubmit)="submit()">
+      <ion-item>
+        <ion-label required floating>Titulo</ion-label>
+        <ion-input maxlength="50" type="text" required [(ngModel)]="clase.nombre" #titulo="ngModel" name="titulo"></ion-input>
+      </ion-item>
+      <small *ngIf="!titulo.valid && titulo.touched">El nombre es obligatorio o tiene un formato incorrecto</small>
+
+
+      <ion-item>
+        <ion-label required floating>Descripcion</ion-label>
+        <ion-input maxlength="50" type="text" required [(ngModel)]="clase.especialidad" #especialidad="ngModel" name="especialidad"></ion-input>
+      </ion-item>
+      <small *ngIf="!especialidad.valid && especialidad.touched">La descripcion es obligatoria</small>
+
+      <ion-item>
+        <ion-label floating>Fecha</ion-label>
+        <ion-datetime type="date" required min="{{fechaMin}}" max="2100-12-31" displayFormat="DD/MM/YYYY" [(ngModel)]="fecha" #fechaNacimiento="ngModel" name="fechaNacimiento"
+          monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"></ion-datetime>
+      </ion-item>
+      <small *ngIf="!fechaNacimiento.valid && fechaNacimiento.touched">La fecha es obligatorio</small>
+
+      <ion-item>
+        <ion-label floating>Hora</ion-label>
+        <ion-datetime type="date" required displayFormat="HH:mm" [(ngModel)]="hora" #horaComienzo="ngModel" name="horaComienzo"></ion-datetime>
+      </ion-item>
+      <small *ngIf="!horaComienzo.valid && horaComienzo.touched">La hora es obligatoria</small>
+
+      <ion-item>
+        <ion-label>Pista</ion-label>
+        <ion-select [ngModel]="pistas" #pista="ngModel" name="pista" (ionChange)="onSelectChangePista($event)">
+          <ion-option *ngFor="let pista of pistas" value="{{pista.id}}">{{pista.nombre}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <small *ngIf="!pista.valid && pista.touched">La pista es obligatoria</small>
+
+      <ion-item>
+          <ion-label>Grupo</ion-label>
+          <ion-select [ngModel]="grupos" #grupo="ngModel" name="grupo" (ionChange)="onSelectChangeGrupo($event)">
+            <ion-option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.nombre}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <small *ngIf="!grupo.valid && grupo.touched">La pista es obligatoria</small>
+
+      <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!claseForm.form.valid">Guardar
+      </button>
+    </form>
+  </ion-list>
+  <button ion-button class="submit-btn" color="primary" full type="submit" disabled="{{asignaciones}}">Crear Asignaciones
+  </button>
+</ion-content>

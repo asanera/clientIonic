@@ -28,6 +28,7 @@ import { GrupoDetalleAlumnoPage } from '../pages/grupo-detalle-alumno/grupo-deta
 import { GrupoPage } from '../pages/grupo/grupo';
 import { PistaDetallePage } from '../pages/pista-detalle/pista-detalle';
 import { PistaModalPage } from '../pages/pista-modal/pista-modal';
+import { ClasesAnadirPage } from '../pages/clases-anadir/clases-anadir';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PistaModalPage } from '../pages/pista-modal/pista-modal';
     GrupoDetalleAlumnoPage,
     GrupoPage,
     PistaDetallePage,
-    PistaModalPage
+    PistaModalPage,
+    ClasesAnadirPage
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,8 @@ import { PistaModalPage } from '../pages/pista-modal/pista-modal';
     GrupoDetalleAlumnoPage,
     GrupoPage,
     PistaDetallePage,
-    PistaModalPage
+    PistaModalPage,
+    ClasesAnadirPage
   ],
   providers: [
     StatusBar,

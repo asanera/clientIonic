@@ -41,6 +41,11 @@ export class PistaService{
     return this.http.post(this.url + 'pista/borrar', pista,
       this.options).map(res => res.json());
   }
-
+  obtenerPistaId(id: Number) {
+    //Peticion al backen
+    return this.http.get(this.url + 'pista/{id}',
+      this.options).map(res => res.json());
+  }
+  }
   
-}
+
