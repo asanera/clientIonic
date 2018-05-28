@@ -4,7 +4,6 @@ import { ClasesAnadirPage } from './clases-anadir';
 
 @NgModule({
   declarations: [
-    ClasesAnadirPage,
   ],
   imports: [
     IonicPageModule.forChild(ClasesAnadirPage),

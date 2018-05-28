@@ -4,7 +4,6 @@ import { AdminPistaPage } from './admin-pista';
 
 @NgModule({
   declarations: [
-    AdminPistaPage,
   ],
   imports: [
     IonicPageModule.forChild(AdminPistaPage),

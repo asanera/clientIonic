@@ -4,7 +4,6 @@ import { AdminGrupoPage } from './admin-grupo';
 
 @NgModule({
   declarations: [
-    AdminGrupoPage,
   ],
   imports: [
     IonicPageModule.forChild(AdminGrupoPage),

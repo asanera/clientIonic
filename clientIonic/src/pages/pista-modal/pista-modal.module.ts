@@ -4,7 +4,6 @@ import { PistaModalPage } from './pista-modal';
 
 @NgModule({
   declarations: [
-    PistaModalPage,
   ],
   imports: [
     IonicPageModule.forChild(PistaModalPage),

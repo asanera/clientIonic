@@ -4,7 +4,6 @@ import { PistaDetallePage } from './pista-detalle';
 
 @NgModule({
   declarations: [
-    PistaDetallePage,
   ],
   imports: [
     IonicPageModule.forChild(PistaDetallePage),

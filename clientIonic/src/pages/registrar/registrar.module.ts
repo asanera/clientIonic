@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
-
   ],
   imports: [
     FormsModule,
