@@ -46,17 +46,15 @@ export class AdminGrupoPage {
   }
 
   borrarGrupo(grupo) {
-    console.log(grupo);
     let modal = this.modalCtrl.create(GrupoDetalleAlumnoPage, { grupo: grupo, mostrarAlumnos: false });
     modal.present();
   }
   grupoAlumnos(id) {
-    console.log("entro");
     let modal = this.modalCtrl.create(GrupoDetalleAlumnoPage, { idGrupo: id, mostrarAlumnos: true });
     modal.present();
   }
   anadirGrupo(){
-    this.navCtrl.push(GrupoPage,{nuevo:false});
+    this.navCtrl.push(GrupoPage,{nuevo:true});
   }
   actualizar(grupo){
     this.navCtrl.push(GrupoPage,{nuevo:false, grupo:grupo});

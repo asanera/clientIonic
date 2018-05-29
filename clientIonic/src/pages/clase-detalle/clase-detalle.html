@@ -16,7 +16,7 @@
   <ion-item>
     <h2>Titulo:</h2>
     <ion-note>
-      {{clase.nombre}}
+      <p>{{clase.nombre}}</p>
     </ion-note>
   </ion-item>
 
@@ -29,35 +29,35 @@
     <ion-item *ngIf="identidadAlumno">
         <h2>Profesor:</h2>
         <ion-note>
-          {{clase.profesor}}
+          <p>{{clase.profesor}}</p>
         </ion-note>
       </ion-item>
 
   <ion-item>
     <h2>Fecha:</h2>
     <ion-note>
-      {{clase.fecha.dayOfMonth}}-{{clase.fecha.monthOfYear}}-{{clase.fecha.weekyear}} {{clase.fecha.hourOfDay}}:{{clase.fecha.minuteOfHour}}
+      <p>{{clase.fecha}}</p>
     </ion-note>
   </ion-item>
 
   <ion-item *ngIf="identidadAlumno">
     <h2>Caballo:</h2>
     <ion-note>
-      {{clase.caballo}}
+      <p>{{clase.caballo}}</p>
     </ion-note>
   </ion-item>
 
   <ion-item *ngIf="identidadProfesor">
       <h2>Grupo:</h2>
       <ion-note>
-        {{clase.grupo}}
+        <p>{{clase.grupo}}</p>
       </ion-note>
     </ion-item>
 
   <ion-item>
     <h2>Pista:</h2>
     <ion-note>
-      {{clase.pista}}
+     <p> {{clase.pista}}</p>
     </ion-note>
   </ion-item>
 </ion-content>

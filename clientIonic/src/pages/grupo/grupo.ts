@@ -24,6 +24,7 @@ export class GrupoPage {
   nuevo: Boolean;
   constructor(public grupoService: GrupoService, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
     this.nuevo = this.navParams.get('nuevo');
+    console.log("nuevo");
     if (this.nuevo)
       this.grupo = new Grupo(-1, "", null);
     else

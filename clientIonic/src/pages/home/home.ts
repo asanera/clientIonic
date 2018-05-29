@@ -20,10 +20,13 @@ export class HomePage {
   public identidadAlumno: Alumno;
   public identidadProfesor: Profesor;
   public clases: Clase[];
+  public clasesPasadas: Clase[];
   public clasesAlumno: Array<any> = [];
   public clasesProfesor: Array<any> = [];
-  public alerts: Array<any> = [];
+  public clasesProfesorAntiguas: Array<any> = [];
+
   public segment;
+
 
   constructor(public toastCtrl: ToastController,public modalCtrl: ModalController, public navCtrl: NavController, private authService: AuthService, private claseService: ClaseService) {
     this.identidadAlumno = authService.getAlumno();
@@ -36,16 +39,15 @@ export class HomePage {
     }
     else if (this.identidadProfesor) {
       this.obtenerClasesFuturasPorProfesor(this.identidadProfesor.id);
+      this.obtenerClasesPasadasPorProfesor(this.identidadProfesor.id);
     } else {
       this.navCtrl.push(LoginPage);
     }
   }
   obtenerClasesFuturasPorAlumno(idAlumno: number) {
-    console.log(idAlumno);
     this.claseService.obtenerFuturasClasesPorAlumno(idAlumno).subscribe(
       response => {
         this.clases = response;
-        console.log(response);
       }, error => {
         var errorMessage = <any>error;
         if (errorMessage != null) {
@@ -66,6 +68,7 @@ export class HomePage {
     this.claseService.obtenerFuturasClasesPorProfesor(idProfesor).subscribe(
       response => {
         this.clases = response;
+        console.log(this.clases);
       }, error => {
         var errorMessage = <any>error;
         if (errorMessage != null) {
@@ -82,21 +85,38 @@ export class HomePage {
     );
   }
 
+  obtenerClasesPasadasPorProfesor(idProfesor: number) {
+    this.claseService.obtenerClasesPasadasPorProfesor(idProfesor).subscribe(
+      response => {
+        this.clasesPasadas = response;
+        console.log(this.clasesPasadas);
+      }, error => {
+        var errorMessage = <any>error;
+        if (errorMessage != null) {
+          var body = JSON.parse(error._body);
+          return;
+        }
+      }, () => {
+        this.clasesProfesor = this.obtenerClasesProfesorAntiguas(this.clasesPasadas);
+      }
+    );
+  }
+
+
   private obtenerClasesProfesor(clases: Clase[]) {
-    (clases);
     let clasesProfesor: Array<any> = [];
     let nombre, especialidad, pista, grupo;
     let fecha: Date;
-    for (let clase of clases) {
+    let clase: Clase;
+    for (clase of clases) {
       nombre = clase.nombre;
       especialidad = clase.especialidad;
       pista = clase.pista.nombre;
-      fecha = clase.fecha;
+      fecha =clase.fecha
       if (clase.asignaciones.length != 0)
         grupo = clase.asignaciones[0].alumno.grupo.nombre;
       else
-        grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
-
+       grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
       clasesProfesor.push({
         nombre: nombre,
         especialidad: especialidad,
@@ -107,6 +127,34 @@ export class HomePage {
     }
     return clasesProfesor;
   }
+
+  private obtenerClasesProfesorAntiguas(clases: Clase[]) {
+    let clasesProfesorAntiguas: Array<any> = [];
+    let nombre, especialidad, pista, grupo;
+    let fecha: Date;
+    let clase: Clase;
+    for (clase of clases) {
+      nombre = clase.nombre;
+      especialidad = clase.especialidad;
+      pista = clase.pista.nombre;
+      fecha =clase.fecha
+      if (clase.asignaciones.length != 0)
+        grupo = clase.asignaciones[0].alumno.grupo.nombre;
+      else
+      grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
+      this.clasesProfesorAntiguas.push({
+        nombre: nombre,
+        especialidad: especialidad,
+        pista: pista,
+        fecha: fecha,
+        grupo: grupo
+      });
+    }
+    return clasesProfesorAntiguas;
+  }
+
+
+  
   private obtenerClasesAlumno(clases: Clase[]) {
     let clasesAlumno: Array<any> = [];
     let nombre, especialidad, caballo, pista, profesor;
@@ -144,7 +192,6 @@ export class HomePage {
   getItems(ev) {
     // set val to the value of the ev target
     var val = ev.target.value;
-    (val);
     if (val == undefined || val == '') {
       this.ngOnInit();
       return;

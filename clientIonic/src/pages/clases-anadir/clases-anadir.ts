@@ -7,6 +7,8 @@ import { PistaService } from '../../providers/servicios/pista.service';
 import { Grupo } from '../../models/grupo';
 import { GrupoService } from '../../providers/servicios/grupo.service';
 import { ClaseService } from '../../providers/servicios/clases.service';
+import { AsignacionService } from '../../providers/servicios/asignacion.service';
+
 
 /**
  * Generated class for the ClasesAnadirPage page.
@@ -19,7 +21,7 @@ import { ClaseService } from '../../providers/servicios/clases.service';
 @Component({
   selector: 'page-clases-anadir',
   templateUrl: 'clases-anadir.html',
-  providers: [AuthService, PistaService, GrupoService, ClaseService]
+  providers: [AuthService, PistaService, GrupoService, ClaseService, AsignacionService]
 })
 export class ClasesAnadirPage {
 
@@ -31,10 +33,10 @@ export class ClasesAnadirPage {
   grupos: Grupo;
   idPista: Number;
   idGrupo: Number;
-  asignaciones: Boolean;
+  noAsignaciones: Boolean;
   fechaMin;
   
-  constructor(public claseService: ClaseService, public grupoService: GrupoService, public pistaService: PistaService, public authService: AuthService, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public asignacionService: AsignacionService,public claseService: ClaseService, public grupoService: GrupoService, public pistaService: PistaService, public authService: AuthService, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
     this.nuevo = this.navParams.get('nuevo');
     if (this.nuevo)
       this.clase = new Clase(-1, "", "", new Date(), null, this.authService.getProfesor(), null, null);
@@ -45,7 +47,7 @@ export class ClasesAnadirPage {
     this.hora;
     this.idGrupo;
     this.idPista;
-    this.asignaciones = false;
+    this.noAsignaciones = true;
     this.fechaMin = new Date().toJSON().split('T')[0];
     this.cargarPistas()
     this.cargaGrupo()
@@ -64,8 +66,9 @@ export class ClasesAnadirPage {
     this.setearCampos()
     this.claseService.guardar(this.clase, this.idGrupo).subscribe(
       response => {
+        console.log(response);
         this.clase = response;
-        this.asignaciones = true;
+        this.noAsignaciones = false;
         this.lanzarToach("La operación ha sido todo un éxito");
       }, error => {
         var capturaError = <any>error;
@@ -128,7 +131,7 @@ export class ClasesAnadirPage {
           if (errorCodigo == 1100)
             this.lanzarToach(body.error);
           else
-            this.lanzarToach("Ha ocurrido al procesar los grupos.");
+            this.lanzarToach("Ha ocurrido un error al procesar los grupos.");
         }
       }
     );
@@ -167,6 +170,28 @@ export class ClasesAnadirPage {
   }
   onSelectChangeGrupo(selectedValue: Number) {
     this.idGrupo = selectedValue;
+  }
+
+  crearAsignacionesAleatoria(){
+    console.log(this.clase);
+    this.asignacionService.generarAsignacionesAleatorias(this.clase).subscribe(
+      response => {
+        this.clase.asignaciones = response;
+        this.lanzarToach("La asignaciones aleatorias han sido un exito");
+      }, error => {
+        let capturaError = <any>error;
+        let errorCodigo;
+        let body;
+        if (capturaError != null) {
+          body = JSON.parse(error._body);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un erro en las asignaciones.");
+        }
+      }
+    );
   }
 
 }

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar no-border-top >
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="segment" color="primary">
       <ion-segment-button value="proximas">
         Proximas
@@ -24,8 +24,7 @@
               <img src="../../assets/imgs/salto_horse.png">
             </ion-thumbnail>
             <h1>{{claseAlumno.nombre}}</h1>
-            <p>{{claseAlumno.fecha.dayOfMonth}}-{{claseAlumno.fecha.monthOfYear}}-{{claseAlumno.fecha.weekyear}} {{claseAlumno.fecha.hourOfDay}}:{{claseAlumno.fecha.minuteOfHour}}
-              hora</p>
+            <p>{{claseAlumno.fecha}}</p>
             <ion-col text-right>
               <button ion-button clear small (click)="detalleClase(claseAlumno)" color="danger" icon-start>
                 <ion-icon name='add'></ion-icon>
@@ -44,7 +43,7 @@
               <img src="../../assets/imgs/maestro.jpg">
             </ion-thumbnail>
             <h1>{{claseProfesor.nombre}}</h1>
-            <p>{{claseProfesor.fecha.dayOfMonth}}-{{claseProfesor.fecha.monthOfYear}}-{{claseProfesor.fecha.weekyear}} {{claseProfesor.fecha.hourOfDay}}:{{claseProfesor.fecha.minuteOfHour}}
+            <p>{{claseProfesor.fecha}}
             </p>
             <ion-col text-right>
               <button ion-button clear small (click)="detalleClase(claseProfesor)" color="danger" icon-start>
@@ -55,19 +54,31 @@
           </ion-item>
         </div>
         <ion-fab bottom right *ngIf=identidadProfesor>
-            <button ion-fab (click)="anadir()" color="danger"><ion-icon name="add"></ion-icon></button>
-          </ion-fab>
+          <button ion-fab (click)="anadir()" color="danger">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-fab>
       </div>
     </ion-list>
 
     <ion-list *ngSwitchCase="'anteriores'">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="img/thumbnail-kitten-1.jpg">
-        </ion-thumbnail>
-
-      </ion-item>
-      ...
+      <div *ngIf="identidadProfesor">
+        <div *ngFor="let claseProfesorAntiguas of clasesProfesorAntiguas">
+          <ion-item>
+            <ion-thumbnail item-start>
+              <img src="../../assets/imgs/maestro.jpg">
+            </ion-thumbnail>
+            <h1>{{claseProfesorAntiguas.nombre}}</h1>
+            <p>{{claseProfesorAntiguas.fecha}}</p>
+            <ion-col text-right>
+              <button ion-button clear small (click)="detalleClase(claseProfesorAntiguas)" color="danger" icon-start>
+                <ion-icon name='add'></ion-icon>
+                Detalles
+              </button>
+            </ion-col>
+          </ion-item>
+        </div>
+      </div>
     </ion-list>
   </div>
 

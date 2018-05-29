@@ -62,6 +62,6 @@
       </button>
     </form>
   </ion-list>
-  <button ion-button class="submit-btn" color="primary" full type="submit" disabled="{{asignaciones}}">Crear Asignaciones
+  <button ion-button class="submit-btn" color="primary" full type="submit" (click)="crearAsignacionesAleatoria()" [disabled]="noAsignaciones">Asignaciones Aleatorias
   </button>
 </ion-content>
