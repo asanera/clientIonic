@@ -8,6 +8,7 @@ import { Grupo } from '../../models/grupo';
 import { GrupoService } from '../../providers/servicios/grupo.service';
 import { ClaseService } from '../../providers/servicios/clases.service';
 import { AsignacionService } from '../../providers/servicios/asignacion.service';
+import { AsignacionesPage } from '../asignaciones/asignaciones';
 
 
 /**
@@ -177,7 +178,7 @@ export class ClasesAnadirPage {
     this.asignacionService.generarAsignacionesAleatorias(this.clase).subscribe(
       response => {
         this.clase.asignaciones = response;
-        this.lanzarToach("La asignaciones aleatorias han sido un exito");
+        this.navCtrl.push(AsignacionesPage, {asignaciones: this.clase.asignaciones});
       }, error => {
         let capturaError = <any>error;
         let errorCodigo;
@@ -188,7 +189,7 @@ export class ClasesAnadirPage {
           if (errorCodigo == 1100)
             this.lanzarToach(body.error);
           else
-            this.lanzarToach("Ha ocurrido un erro en las asignaciones.");
+            this.lanzarToach("Ha ocurrido un error en las asignaciones.");
         }
       }
     );

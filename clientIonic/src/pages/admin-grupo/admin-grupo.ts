@@ -30,7 +30,6 @@ export class AdminGrupoPage {
     this.grupoService.obtenerGrupos().subscribe(
       response => {
         this.grupos = response;
-        console.log(this.grupos);
         if (this.grupos.length == 0) {
           this.mostrarError("Actualmente no hay grupos");
         }

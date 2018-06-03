@@ -1,7 +1,8 @@
 <ion-header>
     <ion-toolbar>
       <ion-title>
-          {{clase.nombre}}
+          <div *ngIf="!eliminar">{{clase.nombre}}</div>
+          <div *ngIf="eliminar">Eliminar Clase</div>
       </ion-title>
       <ion-buttons start>
         <button ion-button (click)="dismiss()">
@@ -12,7 +13,7 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!eliminar">
   <ion-item>
     <h2>Titulo:</h2>
     <ion-note>
@@ -60,4 +61,16 @@
      <p> {{clase.pista}}</p>
     </ion-note>
   </ion-item>
+  <button *ngIf="identidadProfesor" (click)="verAsignaciones()" ion-button full>Ver Asignaciones</button>
+</ion-content>
+
+<ion-content *ngIf="eliminar">
+    <h2 tex-center>¿Estas seguro que desear eliminar la clase {{clase.nombre}}?</h2>
+
+    <ion-grid text-center>
+      <button class="m-auto" ion-button color="secondary" (click)="borrarClase()">Si</button>
+      <button class="m-auto" ion-button color="danger" (click)="dismiss()">No</button>
+    </ion-grid>
+  
+
 </ion-content>

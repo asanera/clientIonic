@@ -29,6 +29,8 @@ import { GrupoPage } from '../pages/grupo/grupo';
 import { PistaDetallePage } from '../pages/pista-detalle/pista-detalle';
 import { PistaModalPage } from '../pages/pista-modal/pista-modal';
 import { ClasesAnadirPage } from '../pages/clases-anadir/clases-anadir';
+import { AsignacionesPage } from '../pages/asignaciones/asignaciones';
+import { ActualizarPerfilPage } from '../pages/actualizar-perfil/actualizar-perfil';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { ClasesAnadirPage } from '../pages/clases-anadir/clases-anadir';
     GrupoPage,
     PistaDetallePage,
     PistaModalPage,
-    ClasesAnadirPage
+    ClasesAnadirPage,
+    AsignacionesPage,
+    ActualizarPerfilPage
   ],
   imports: [
     BrowserModule,
@@ -84,7 +88,9 @@ import { ClasesAnadirPage } from '../pages/clases-anadir/clases-anadir';
     GrupoPage,
     PistaDetallePage,
     PistaModalPage,
-    ClasesAnadirPage
+    ClasesAnadirPage,
+    AsignacionesPage,
+    ActualizarPerfilPage
   ],
   providers: [
     StatusBar,

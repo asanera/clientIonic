@@ -8,8 +8,6 @@ import 'rxjs/add/operator/map';
 
 // sirve para recoger las respuestas de las peticiones ajax al servidor
 import { Observable } from 'rxjs/Observable';
-import { Profesor } from '../../models/profesor';
-import { Alumno } from '../../models/alumno';
 
 /*
   Generated class for the ServiciosProvider provider.
@@ -18,9 +16,7 @@ import { Alumno } from '../../models/alumno';
   and Angular DI.
 */
 @Injectable()
-export class RegistrarService{
-
-  
+export class ProfesorService{
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -33,24 +29,11 @@ export class RegistrarService{
     this.options = new RequestOptions({ headers: this.headers });
   }
 
-  registrarAlumno(alumno: Alumno) {
-     //Peticion al backend
-     return this.http.post(this.url + 'alumno/registrar', alumno,
-     this.options).map(res => res.json());
+  obtenerProfesores() {
+    //Peticion al backen
+    return this.http.get(this.url + 'profesores',
+      this.options).map(res => res.json());
   }
-  registrarProfesor(profesor :Profesor) {
-     //Peticion al backend
-     return this.http.post(this.url + 'profesor/registrar', profesor,
-     this.options).map(res => res.json());
-  }
-  actulizarAlumno(alumno: Alumno){
-     //Peticion al backend
-     return this.http.post(this.url + 'alumno/actualizar/all', alumno,
-     this.options).map(res => res.json());
-  }
-  actulizarProfesor(profesor: Profesor) {
-    return this.http.post(this.url + 'profesor/actualizar/all', profesor,
-    this.options).map(res => res.json());
-  }
+  
   
 }

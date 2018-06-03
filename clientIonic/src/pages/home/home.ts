@@ -9,6 +9,8 @@ import { ClaseDetallePage } from '../clase-detalle/clase-detalle';
 import { LoginPage } from '../login/login';
 import { ClasesAnadirPage } from '../clases-anadir/clases-anadir';
 import { Grupo } from '../../models/grupo';
+import { Caballo } from '../../models/caballo';
+import { Asignacion } from '../../models/asignacion';
 
 @Component({
   selector: 'page-home',
@@ -21,21 +23,24 @@ export class HomePage {
   public identidadProfesor: Profesor;
   public clases: Clase[];
   public clasesPasadas: Clase[];
-  public clasesAlumno: Array<any> = [];
   public clasesProfesor: Array<any> = [];
   public clasesProfesorAntiguas: Array<any> = [];
-
+  public clasesAlumno: Array<any> = [];
+  public clasesAlumnosPasadas: Array<any> = [];
   public segment;
 
-
-  constructor(public toastCtrl: ToastController,public modalCtrl: ModalController, public navCtrl: NavController, private authService: AuthService, private claseService: ClaseService) {
+  constructor(public toastCtrl: ToastController, public modalCtrl: ModalController, public navCtrl: NavController, private authService: AuthService, private claseService: ClaseService) {
     this.identidadAlumno = authService.getAlumno();
     this.identidadProfesor = authService.getProfesor();
     this.segment = "proximas";
   }
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.controlador()
+  }
+  controlador() {
     if (this.identidadAlumno) {
       this.obtenerClasesFuturasPorAlumno(this.identidadAlumno.id);
+      this.obtenerClasesPasadasPorAlumno(this.identidadAlumno.id);
     }
     else if (this.identidadProfesor) {
       this.obtenerClasesFuturasPorProfesor(this.identidadProfesor.id);
@@ -44,42 +49,24 @@ export class HomePage {
       this.navCtrl.push(LoginPage);
     }
   }
-  obtenerClasesFuturasPorAlumno(idAlumno: number) {
-    this.claseService.obtenerFuturasClasesPorAlumno(idAlumno).subscribe(
-      response => {
-        this.clases = response;
-      }, error => {
-        var errorMessage = <any>error;
-        if (errorMessage != null) {
-          var body = JSON.parse(error._body);
-          return;
-        }
-      }, () => {
-        if (!this.clases) {
-          this.lanzarToach("Actualmente no tienes ninguna clase")
-        } else {
-          this.clasesAlumno = this.obtenerClasesAlumno(this.clases);
-        }
-      }
-    );
 
-  }
   obtenerClasesFuturasPorProfesor(idProfesor: number) {
     this.claseService.obtenerFuturasClasesPorProfesor(idProfesor).subscribe(
       response => {
         this.clases = response;
-        console.log(this.clases);
+        this.clasesProfesor = this.obtenerClasesProfesor(this.clases);
       }, error => {
-        var errorMessage = <any>error;
-        if (errorMessage != null) {
-          var body = JSON.parse(error._body);
+        let capturaError = <any>error;
+        let errorCodigo;
+        let body;
+        if (capturaError != null) {
+          body = JSON.parse(error._body);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
           return;
-        }
-      }, () => {
-        if (!this.clases) {
-            this.lanzarToach("Actualmente no has creado ninguna clase")
-        } else {
-          this.clasesProfesor = this.obtenerClasesProfesor(this.clases);
         }
       }
     );
@@ -89,85 +76,183 @@ export class HomePage {
     this.claseService.obtenerClasesPasadasPorProfesor(idProfesor).subscribe(
       response => {
         this.clasesPasadas = response;
-        console.log(this.clasesPasadas);
+        this.clasesProfesorAntiguas = this.obtenerClasesProfesorAntiguas(this.clasesPasadas);
       }, error => {
-        var errorMessage = <any>error;
-        if (errorMessage != null) {
-          var body = JSON.parse(error._body);
+        let capturaError = <any>error;
+        let errorCodigo;
+        let body;
+        if (capturaError != null) {
+          body = JSON.parse(error._body);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
           return;
         }
-      }, () => {
-        this.clasesProfesor = this.obtenerClasesProfesorAntiguas(this.clasesPasadas);
       }
     );
   }
 
 
-  private obtenerClasesProfesor(clases: Clase[]) {
+  obtenerClasesProfesor(clases: Clase[]) {
     let clasesProfesor: Array<any> = [];
-    let nombre, especialidad, pista, grupo;
-    let fecha: Date;
+    let id, nombre, especialidad, pista, grupo, asignaciones: Asignacion[], fecha;
     let clase: Clase;
     for (clase of clases) {
+      id = clase.id
       nombre = clase.nombre;
       especialidad = clase.especialidad;
       pista = clase.pista.nombre;
-      fecha =clase.fecha
-      if (clase.asignaciones.length != 0)
+      fecha= this.formatearFecha(clase.fecha.toString());
+      if (clase.asignaciones.length != 0) {
+        asignaciones = clase.asignaciones;
         grupo = clase.asignaciones[0].alumno.grupo.nombre;
+      }
       else
-       grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
+        grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
       clasesProfesor.push({
+        id: id,
         nombre: nombre,
         especialidad: especialidad,
         pista: pista,
         fecha: fecha,
-        grupo: grupo
+        grupo: grupo,
+        asignaciones: asignaciones
       });
     }
     return clasesProfesor;
   }
 
-  private obtenerClasesProfesorAntiguas(clases: Clase[]) {
+  obtenerClasesProfesorAntiguas(clasesPasadas: Clase[]) {
     let clasesProfesorAntiguas: Array<any> = [];
-    let nombre, especialidad, pista, grupo;
-    let fecha: Date;
+    let id, nombre, especialidad, pista, grupo, asignaciones: Asignacion[], fecha;
     let clase: Clase;
-    for (clase of clases) {
+    for (clase of clasesPasadas) {
+      id = clase.id;
       nombre = clase.nombre;
       especialidad = clase.especialidad;
       pista = clase.pista.nombre;
-      fecha =clase.fecha
-      if (clase.asignaciones.length != 0)
+      fecha = this.formatearFecha(clase.fecha.toString());
+      if (clase.asignaciones.length != 0) {
+        asignaciones = clase.asignaciones;
         grupo = clase.asignaciones[0].alumno.grupo.nombre;
-      else
-      grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
-      this.clasesProfesorAntiguas.push({
+      }
+      else {
+        grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
+      }
+      clasesProfesorAntiguas.push({
+        id: id,
         nombre: nombre,
         especialidad: especialidad,
         pista: pista,
         fecha: fecha,
-        grupo: grupo
+        grupo: grupo,
+        asignaciones: asignaciones
       });
     }
     return clasesProfesorAntiguas;
   }
 
+  obtenerClasesFuturasPorAlumno(idAlumno: number) {
+    this.claseService.obtenerFuturasClasesPorAlumno(idAlumno).subscribe(
+      response => {
+        this.clases = response;
+        this.clasesAlumno = this.obtenerClasesAlumno(this.clases);
+      }, error => {
+        let capturaError = <any>error;
+        let errorCodigo;
+        let body;
+        if (capturaError != null) {
+          body = JSON.parse(error._body);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
+          return;
+        }
+      }
+    );
 
-  
-  private obtenerClasesAlumno(clases: Clase[]) {
-    let clasesAlumno: Array<any> = [];
-    let nombre, especialidad, caballo, pista, profesor;
-    let fecha: Date;
+  }
+  obtenerClasesPasadasPorAlumno(idAlumno: number) {
+    this.claseService.obtenerPasadasClasesPorAlumno(idAlumno).subscribe(
+      response => {
+        this.clases = response;
+        this.clasesAlumnosPasadas = this.setearClasesPasadasAlumno(this.clases);
+      }, error => {
+        let capturaError = <any>error;
+        let errorCodigo;
+        let body;
+        if (capturaError != null) {
+          body = JSON.parse(error._body);
+          errorCodigo = body.codigo;
+          if (errorCodigo == 1100)
+            this.lanzarToach(body.error);
+          else
+            this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
+          return;
+        }
+      }
+    );
+  }
+  setearClasesPasadasAlumno(clases: Clase[]) {
+    let clasesAlumnoPasada: Array<any> = [];
+    let nombre, especialidad, caballo, pista, profesor, fecha;
+
     for (let clase of clases) {
       nombre = clase.nombre;
       especialidad = clase.especialidad;
       pista = clase.pista.nombre;
-      fecha = clase.fecha;
+      fecha = this.formatearFecha(clase.fecha.toString());
       profesor = clase.profesor.nombre;
       for (let asignacion of clase.asignaciones) {
         if (asignacion.alumno.id == this.identidadAlumno.id) {
-          caballo = asignacion.caballo.nombre;
+          if (asignacion.caballo == null) {
+            let caballoFicticio: Caballo = new Caballo(-1, "Ningun caballo asociado", "", new Date(), null)
+            caballo = caballoFicticio.nombre;
+          }
+          else
+            caballo = asignacion.caballo.nombre;
+          break;
+        }
+      }
+      clasesAlumnoPasada.push({
+        nombre: nombre,
+        especialidad: especialidad,
+        pista: pista,
+        fecha: fecha,
+        caballo: caballo,
+        profesor: profesor
+      });
+    }
+    return clasesAlumnoPasada;
+
+  }
+  formatearFecha(fecha: string){
+    let date: Date = new Date(fecha);
+    let fechaNueva: String;
+    fechaNueva = date.getUTCDate() + "/"+(date.getMonth()+1)+"/"+date.getFullYear() + " " + date.getHours() +":"+date.getMinutes();
+    return fechaNueva;
+  }
+  obtenerClasesAlumno(clases: Clase[]) {
+    let clasesAlumno: Array<any> = [];
+    let nombre, especialidad, caballo, pista, profesor, fecha;
+    for (let clase of clases) {
+      nombre = clase.nombre;
+      especialidad = clase.especialidad;
+      pista = clase.pista.nombre;
+      fecha = this.formatearFecha(clase.fecha.toString());
+      profesor = clase.profesor.nombre;
+      for (let asignacion of clase.asignaciones) {
+        if (asignacion.alumno.id == this.identidadAlumno.id) {
+          if (asignacion.caballo == null) {
+            let caballoFicticio: Caballo = new Caballo(-1, "Ningun caballo asociado", "", new Date(), null)
+            caballo = caballoFicticio.nombre;
+          }
+          else
+            caballo = asignacion.caballo.nombre;
           break;
         }
       }
@@ -187,34 +272,47 @@ export class HomePage {
     let modal = this.modalCtrl.create(ClaseDetallePage, { clase: clase });
     modal.present();
   }
-
-
+  anadir() {
+    this.navCtrl.push(ClasesAnadirPage, { nuevo: true });
+  }
   getItems(ev) {
     // set val to the value of the ev target
     var val = ev.target.value;
     if (val == undefined || val == '') {
-      this.ngOnInit();
+      this.controlador();
       return;
     }
     // if the value is an empty string don't filter the items
     if (this.identidadAlumno) {
-      if (val && val.trim() != '') {
-        this.clasesAlumno = this.clasesAlumno.filter((item) => {
-          return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-        })
+
+      if (this.segment == 'proximas') {
+        if (val && val.trim() != '') {
+          this.clasesAlumno = this.clasesAlumno.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          })
+        }
+      } else {
+        if (val && val.trim() != '') {
+          this.clasesAlumnosPasadas = this.clasesAlumnosPasadas.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          })
+        }
       }
     } else {
-      if (val && val.trim() != '') {
-        this.clasesProfesor = this.clasesProfesor.filter((item) => {
-          (item);
-          return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-        })
+      if (this.segment == 'proximas') {
+        if (val && val.trim() != '') {
+          this.clasesProfesor = this.clasesProfesor.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          });
+        }
+      } else {
+        if (val && val.trim() != '') {
+          this.clasesProfesorAntiguas = this.clasesProfesorAntiguas.filter((item) => {
+            return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          });
+        }
       }
     }
-
-  }
-  anadir() {
-    this.navCtrl.push(ClasesAnadirPage, { nuevo: true });
   }
   lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({
@@ -223,5 +321,9 @@ export class HomePage {
       dismissOnPageChange: true
     });
     toast.present();
+  }
+  eliminarClase(clase: Clase){
+    let modal = this.modalCtrl.create(ClaseDetallePage, { clase: clase, eliminar:true });
+    modal.present();
   }
 }

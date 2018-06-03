@@ -4,6 +4,7 @@ import { Alumno } from '../../models/alumno';
 import { Profesor } from '../../models/profesor';
 import { AuthService } from '../../providers/servicios/auth.service';
 import { CerrarSesionPage } from '../cerrar-sesion/cerrar-sesion';
+import { ActualizarPerfilPage } from '../actualizar-perfil/actualizar-perfil';
 
 /**
  * Generated class for the AjustesPage page.
@@ -26,9 +27,6 @@ export class AjustesPage {
     this.identidadProfesor = authService.getProfesor();
   }
 
-  ionViewDidLoad() {
-
-  }
   cerrarSesion() {
     let profileModal;
     if (this.identidadAlumno)
@@ -36,6 +34,12 @@ export class AjustesPage {
     else
       profileModal = this.modalCtrl.create(CerrarSesionPage, { nombre: this.identidadProfesor.nombre });
     profileModal.present();
+  }
+  editar() {
+    this.navCtrl.push(ActualizarPerfilPage);
+  }
+  borrar() {
+
   }
 
 }

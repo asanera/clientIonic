@@ -12,7 +12,6 @@ import { Clase } from '../../models/clase';
 
 @Injectable()
 export class ClaseService {
-
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -42,6 +41,14 @@ export class ClaseService {
 
   obtenerClasesPasadasPorProfesor(idProfesor: Number) {
     return this.http.get(this.url + 'clases/profesor/pass/' + idProfesor,
+    this.options).map(res => res.json());
+  }
+  obtenerPasadasClasesPorAlumno(idAlumno:Number){
+    return this.http.get(this.url + 'clases/alumno/pass/' + idAlumno,
+    this.options).map(res => res.json());
+  }
+  borrarClase(idClase: number) {
+    return this.http.get(this.url + 'clase/borrar/' + idClase,
     this.options).map(res => res.json());
   }
 

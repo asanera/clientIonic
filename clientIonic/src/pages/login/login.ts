@@ -58,7 +58,6 @@ export class LoginPage {
             this.loginService.loguearProfesor(this.personaLoguear).subscribe(
               //Bloque Profesor
               response => {
-                (response);
                 this.crearSesionProfesor(response);
                 this.navCtrl.push(TabsPage);
                 return true;

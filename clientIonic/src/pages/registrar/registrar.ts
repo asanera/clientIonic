@@ -21,7 +21,7 @@ export class RegistrarPage {
   public person: Person;
   public role;
   public fecha: Date;
-  public registroCorrecto;
+  public registroCorrecto: Boolean;
   public registrarForm: FormGroup;
   public repetirPass;
   public repetirPassKo: Boolean;
@@ -34,7 +34,7 @@ export class RegistrarPage {
     this.repetirPass = '';
     this.repetirPassKo = false;
     this.registroCorrecto = false;
-    this.fecha;
+    this.fecha = new Date();
 
   }
   onChange(value) {
@@ -155,7 +155,7 @@ export class RegistrarPage {
 
     );
   }
-  public crearToast(mensaje) {
+  crearToast(mensaje) {
     let toast = this.toastCtrl.create({
       message: mensaje,
       duration: 3000,
@@ -169,7 +169,5 @@ export class RegistrarPage {
     } else {
       this.repetirPassKo = false;
     }
-
-
   }
 }

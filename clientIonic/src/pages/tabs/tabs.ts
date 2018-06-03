@@ -15,7 +15,7 @@ import { AdminPage } from '../admin/admin';
   templateUrl: 'tabs.html',
   providers: [AuthService]
 })
-export class TabsPage implements OnInit {
+export class TabsPage {
 
   tab1Root = HomePage;
   tab3Root = ContactPage;
@@ -28,7 +28,7 @@ export class TabsPage implements OnInit {
     this.identidadProfesor = authService.getProfesor();
   }
 
-  ngOnInit(){
+  ionViewCanEnter(){
     if(this.identidadAlumno == null && this.identidadProfesor == null){
       this.navCtrl.push(LoginPage);
     }
