@@ -18,7 +18,7 @@
   <div [ngSwitch]="segment">
     <ion-list *ngSwitchCase="'proximas'" ngSelected="selected">
       <div *ngIf="identidadAlumno">
-          <h2 class="center-align" *ngIf="identidadAlumno.length ==0">Actualmente no hay clases</h2>
+        <h2 class="center-align" *ngIf="clasesAlumno.length ==0">Actualmente no hay clases</h2>
         <div *ngFor="let claseAlumno of clasesAlumno">
           <ion-item>
             <ion-thumbnail item-start>
@@ -54,14 +54,14 @@
               </button>
             </ion-col>
             <ion-col text-right>
-                <button ion-button clear small (click)="eliminarClase(claseProfesor)" color="danger" icon-start>
-                  <ion-icon name='trash'></ion-icon>
-                </button>
-              </ion-col>
+              <button ion-button clear small (click)="eliminarClase(claseProfesor)" color="danger" icon-start>
+                <ion-icon name='trash'></ion-icon>
+              </button>
+            </ion-col>
           </ion-item>
         </div>
-        <ion-fab bottom right *ngIf=identidadProfesor>
-          <button ion-fab (click)="anadir()" color="danger">
+        <ion-fab bottom right>
+          <button ion-fab color="danger" (click)="anadir()">
             <ion-icon name="add"></ion-icon>
           </button>
         </ion-fab>
@@ -86,8 +86,6 @@
           </ion-item>
         </div>
       </div>
-
-
 
       <div *ngIf="identidadProfesor">
         <div *ngFor="let claseProfesorAntigua of clasesProfesorAntiguas">

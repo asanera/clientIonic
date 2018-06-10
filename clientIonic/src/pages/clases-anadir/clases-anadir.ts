@@ -67,7 +67,6 @@ export class ClasesAnadirPage {
     this.setearCampos()
     this.claseService.guardar(this.clase, this.idGrupo).subscribe(
       response => {
-        console.log(response);
         this.clase = response;
         this.noAsignaciones = false;
         this.lanzarToach("La operación ha sido todo un éxito");

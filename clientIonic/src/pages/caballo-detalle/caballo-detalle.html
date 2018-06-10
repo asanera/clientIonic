@@ -1,0 +1,41 @@
+<!--
+  Generated template for the PistaDetallePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Caballos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+ 
+  <form  #caballoForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Nombre</ion-label>
+        <ion-input type="text" #nombre="ngModel" [(ngModel)]="caballo.nombre" name="nombre" required></ion-input>
+      </ion-item>
+      <small *ngIf="!nombre.valid && nombre.touched">El nombre es obligatorio</small>
+      <ion-item>
+        <ion-label floating>Raza</ion-label>
+        <ion-input type="text" #raza="ngModel" [(ngModel)]="caballo.raza" name="raza" required></ion-input>
+      </ion-item>
+      <small *ngIf="!raza.valid && raza.touched">La raza es obligatoria</small>
+    </ion-list>
+    <ion-item>
+      <ion-label floating>Fecha Nacimieto</ion-label>
+      <ion-datetime type="date" required displayFormat="DD/MM/YYYY" [(ngModel)]="fecha" #fechaNacimiento="ngModel" name="fechaNacimiento"
+      monthNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"></ion-datetime>
+    </ion-item>
+    <small *ngIf="!fechaNacimiento.valid && fechaNacimiento.touched">La fecha de nacimiento es obligatorio</small>
+    <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!caballoForm.form.valid">Enviar
+    </button>
+  </form>
+
+</ion-content>

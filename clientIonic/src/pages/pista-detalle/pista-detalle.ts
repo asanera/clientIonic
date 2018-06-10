@@ -94,9 +94,7 @@ export class PistaDetallePage {
     toast.present();
   }
   dismiss() {
-
     this.viewCtrl.dismiss();
-
   }
 
 }

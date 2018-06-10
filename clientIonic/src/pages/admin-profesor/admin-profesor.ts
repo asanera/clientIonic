@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Profesor } from '../../models/profesor';
 import { ProfesorService } from '../../providers/servicios/profesor.service';
+import { ProfesorDetallePage } from '../profesor-detalle/profesor-detalle';
 
 /**
  * Generated class for the AdminProfesorPage page.
@@ -41,6 +42,9 @@ export class AdminProfesorPage {
       }
     );
   }
+  detalleProfesor(profesor: Profesor){
+    this.navCtrl.push(ProfesorDetallePage, {profesor: profesor});
+  }
   lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({
       message: mensaje,
@@ -48,6 +52,22 @@ export class AdminProfesorPage {
       dismissOnPageChange: true
     });
     toast.present();
+  }
+  getItems(ev) {
+    // Reset items back to all of the items
+    var val = ev.target.value;
+    if (val == undefined || val == '') {
+      this.obtenerProfesores();
+      return;
+    }
+    // set val to the value of the ev target
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.profesores = this.profesores.filter((item) => {
+        return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 
 }

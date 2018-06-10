@@ -15,15 +15,14 @@
 
 <ion-content>
   <ion-list>
-    <ion-searchbar placeholder="Buscar alumnos" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar profesor" (ionInput)="getItems($event)"></ion-searchbar>
     <ion-item *ngFor="let profesor of profesores">
       <div class="container">
         <div class="infoprofesor">
           {{ profesor.nombre }} {{profesor.apellidos}}
         </div>
         <div class="clear acciones">
-          <button ion-button class="col-6" (click)="detalleAlumno(alumno)">Detalles</button>
-          <button ion-button color="secondary" class="col-6" (click)="cambiarGrupo(alumno)">Cambiar grupo</button>
+          <button ion-button class="col-6" (click)="detalleProfesor(profesor)">Detalles</button>
         </div>
       </div>
 

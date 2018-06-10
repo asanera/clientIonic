@@ -19,6 +19,7 @@ import { Grupo } from '../../models/grupo';
 */
 @Injectable()
 export class AlumnoService{
+
   private url = "http://localhost:8080/api/";
   private headers;
   private options;
@@ -44,6 +45,10 @@ export class AlumnoService{
 
   obtenerAlumnosGrupos(id: Number) {
     return this.http.get(this.url + 'alumnos/grupo/'+id,
+    this.options).map(res => res.json());
+  }
+  borrar(id: Number) {
+    return this.http.get(this.url + 'alumno/borrar/'+id,
     this.options).map(res => res.json());
   }
  

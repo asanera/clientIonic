@@ -6,12 +6,6 @@ import { Alumno } from '../../models/alumno';
 import { Profesor } from '../../models/profesor';
 import { FormGroup } from '@angular/forms';
 
-/**
- * Generated class for the ActualizarPerfilPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,7 +20,7 @@ export class ActualizarPerfilPage {
   public fecha: Date;
   public registroCorrecto: Boolean;
   public actualizarForm: FormGroup;
-  public repetirPass;
+  public repetirPass: String;
   public repetirPassKo: Boolean;
 
   constructor(public toastCtrl: ToastController, public authService: AuthService, public registrarService: RegistrarService, public navCtrl: NavController, public navParams: NavParams) {
@@ -36,7 +30,7 @@ export class ActualizarPerfilPage {
     this.repetirPassKo = false;
     this.registroCorrecto = false;
     if (this.identidadAlumno) {
-      this.fecha = this.identidadAlumno.fechaNacimiento;
+      this.fecha = this.identidadAlumno.fechaNacimiento;      
       this.identidadAlumno.cuentaBancaria = '';
       this.identidadAlumno.password = '';
     }
@@ -60,7 +54,7 @@ export class ActualizarPerfilPage {
     profesor.fechaNacimiento = this.fecha;
     this.registrarService.actulizarProfesor(profesor).subscribe(
       response => {
-        this.crearSesionAlumno(response);
+        this.crearSesionProfesor(response);
         this.crearToast("Tu perfil se ha actualizado correctamente");
       }, error => {
         let capturaError = <any>error;

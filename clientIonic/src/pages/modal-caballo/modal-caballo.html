@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Eliminar
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancelar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <h2 tex-center>¿Estas seguro de que deseas eliminar el caballo {{caballo.nombre}}?</h2>
+    <ion-grid text-center>
+      <button class="m-auto" ion-button color="secondary" (click)="borrar()">Aceptar</button>
+      <button class="m-auto" ion-button color="danger" (click)="dismiss()">Cancelar</button>
+    </ion-grid>
+</ion-content>

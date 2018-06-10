@@ -28,7 +28,7 @@ export class TabsPage {
     this.identidadProfesor = authService.getProfesor();
   }
 
-  ionViewCanEnter(){
+  ionViewDidEnter(){
     if(this.identidadAlumno == null && this.identidadProfesor == null){
       this.navCtrl.push(LoginPage);
     }

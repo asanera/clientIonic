@@ -1,0 +1,37 @@
+<!--
+  Generated template for the AdminAlumnoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Caballos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+      <ion-searchbar placeholder="Buscar caballos" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-item *ngFor="let caballo of caballos">
+      <div class="container">
+        <div class="infoCaballo">
+          {{ caballo.nombre}}
+        </div>
+        <div class="clear acciones">
+          <button ion-button color="secondary" class="col-6" (click)="actualizar(caballo)">Actualizar</button>
+          <button ion-button color="danger" class="col-6" (click)="borrar(caballo)">Borrar</button>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+    <ion-fab bottom right>
+      <button ion-fab color="danger" (click)="anadir()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
+
+</ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ToastController } from 'ionic-angular';
+import { NavController, ModalController, ToastController, NavParams } from 'ionic-angular';
 import { Clase } from '../../models/clase';
 import { Profesor } from '../../models/profesor';
 import { Alumno } from '../../models/alumno';
@@ -19,23 +19,32 @@ import { Asignacion } from '../../models/asignacion';
 })
 export class HomePage {
 
-  public identidadAlumno: Alumno;
-  public identidadProfesor: Profesor;
-  public clases: Clase[];
-  public clasesPasadas: Clase[];
-  public clasesProfesor: Array<any> = [];
-  public clasesProfesorAntiguas: Array<any> = [];
-  public clasesAlumno: Array<any> = [];
-  public clasesAlumnosPasadas: Array<any> = [];
-  public segment;
+  identidadAlumno: Alumno;
+  identidadProfesor: Profesor;
+  clases: Clase[];
+  clasesPasadas: Clase[];
+  clasesProfesor: Array<any> = [];
+  clasesProfesorAntiguas: Array<any> = [];
+  clasesAlumno: Array<any> = [];
+  clasesAlumnosPasadas: Array<any> = [];
+  segment;
+  mensaje: String;
 
-  constructor(public toastCtrl: ToastController, public modalCtrl: ModalController, public navCtrl: NavController, private authService: AuthService, private claseService: ClaseService) {
+  constructor(public toastCtrl: ToastController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,private authService: AuthService, private claseService: ClaseService) {
     this.identidadAlumno = authService.getAlumno();
     this.identidadProfesor = authService.getProfesor();
     this.segment = "proximas";
   }
   ionViewWillEnter() {
     this.controlador()
+  }
+  ionViewDidEnter(){
+    this.mensaje = null;
+    this.mensaje = this.navParams.get("mensaje");
+    console.log(this.mensaje);
+    if(this.mensaje !=null){
+      this.lanzarToach(this.mensaje);
+    }
   }
   controlador() {
     if (this.identidadAlumno) {
@@ -228,7 +237,6 @@ export class HomePage {
       });
     }
     return clasesAlumnoPasada;
-
   }
   formatearFecha(fecha: string){
     let date: Date = new Date(fecha);
@@ -269,8 +277,7 @@ export class HomePage {
   }
 
   detalleClase(clase) {
-    let modal = this.modalCtrl.create(ClaseDetallePage, { clase: clase });
-    modal.present();
+    this.navCtrl.push(ClaseDetallePage, { clase: clase });
   }
   anadir() {
     this.navCtrl.push(ClasesAnadirPage, { nuevo: true });

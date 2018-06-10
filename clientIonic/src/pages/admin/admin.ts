@@ -5,6 +5,7 @@ import { AdminAlumnoPage } from '../admin-alumno/admin-alumno';
 import { AdminProfesorPage } from '../admin-profesor/admin-profesor';
 import { AdminPistaPage } from '../admin-pista/admin-pista';
 import { Alumno } from '../../models/alumno';
+import { AdminCaballoPage } from '../admin-caballo/admin-caballo';
 
 /**
  * Generated class for the AdminPage page.
@@ -35,5 +36,8 @@ export class AdminPage {
   }
   pistas(){
     this.navCtrl.push(AdminPistaPage);
+  }
+  caballos(){
+    this.navCtrl.push(AdminCaballoPage);
   }
 }

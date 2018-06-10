@@ -31,6 +31,13 @@ import { PistaModalPage } from '../pages/pista-modal/pista-modal';
 import { ClasesAnadirPage } from '../pages/clases-anadir/clases-anadir';
 import { AsignacionesPage } from '../pages/asignaciones/asignaciones';
 import { ActualizarPerfilPage } from '../pages/actualizar-perfil/actualizar-perfil';
+import { ProfesorDetallePage } from '../pages/profesor-detalle/profesor-detalle';
+import { AdminCaballoPage } from '../pages/admin-caballo/admin-caballo';
+import { CaballoDetallePage } from '../pages/caballo-detalle/caballo-detalle';
+import { ModalCaballoPage } from '../pages/modal-caballo/modal-caballo';
+import { AjustesBorrarPerfilPage } from '../pages/ajustes-borrar-perfil/ajustes-borrar-perfil';
+
+
 
 @NgModule({
   declarations: [
@@ -57,7 +64,12 @@ import { ActualizarPerfilPage } from '../pages/actualizar-perfil/actualizar-perf
     PistaModalPage,
     ClasesAnadirPage,
     AsignacionesPage,
-    ActualizarPerfilPage
+    ActualizarPerfilPage,
+    ProfesorDetallePage,
+    AdminCaballoPage,
+    CaballoDetallePage,
+    ModalCaballoPage,
+    AjustesBorrarPerfilPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +102,12 @@ import { ActualizarPerfilPage } from '../pages/actualizar-perfil/actualizar-perf
     PistaModalPage,
     ClasesAnadirPage,
     AsignacionesPage,
-    ActualizarPerfilPage
+    ActualizarPerfilPage,
+    ProfesorDetallePage,
+    AdminCaballoPage,
+    CaballoDetallePage,
+    ModalCaballoPage,
+    AjustesBorrarPerfilPage
   ],
   providers: [
     StatusBar,

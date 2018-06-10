@@ -5,13 +5,10 @@ import { Profesor } from '../../models/profesor';
 import { AuthService } from '../../providers/servicios/auth.service';
 import { CerrarSesionPage } from '../cerrar-sesion/cerrar-sesion';
 import { ActualizarPerfilPage } from '../actualizar-perfil/actualizar-perfil';
+import { AjustesBorrarPerfilPage } from '../ajustes-borrar-perfil/ajustes-borrar-perfil';
 
-/**
- * Generated class for the AjustesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+
 
 @IonicPage()
 @Component({
@@ -39,7 +36,10 @@ export class AjustesPage {
     this.navCtrl.push(ActualizarPerfilPage);
   }
   borrar() {
-
+    if(this.identidadAlumno)
+      this.navCtrl.push(AjustesBorrarPerfilPage, {alumno:this.identidadAlumno})
+    else
+      this.navCtrl.push(AjustesBorrarPerfilPage, {profesor:this.identidadProfesor})
   }
 
 }

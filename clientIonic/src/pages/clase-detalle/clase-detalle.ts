@@ -56,8 +56,12 @@ export class ClaseDetallePage {
     this.claseService.borrarClase(this.clase.id).subscribe(
       response => {
         let correcto: Boolean = response;
-        if (correcto)
-          this.navCtrl.push(HomePage);
+        if (correcto){
+          this.dismiss();
+          this.navCtrl.push(HomePage, {mensaje: 'La clase '+this.clase.nombre +' se ha borrado correctamente'});
+        }else{
+          this.lanzarToach('La clase no se ha eliminado correctamente');
+        }
       }, error => {
         let capturaError = <any>error;
         let errorCodigo;
@@ -69,7 +73,6 @@ export class ClaseDetallePage {
             this.lanzarToach(body.error);
           else
             this.lanzarToach("Ha ocurrido un error inesperado intentelo mas tarde");
-          return;
         }
       }
     );
