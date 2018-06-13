@@ -5,6 +5,7 @@ import { Grupo } from '../../models/grupo';
 import { Alumno } from '../../models/alumno';
 import { GrupoService } from '../../providers/servicios/grupo.service';
 import { AlumnoService } from '../../providers/servicios/alumno.service';
+import { AdminAlumnoPage } from '../admin-alumno/admin-alumno';
 
 /**
  * Generated class for the AlumnoDetallePage page.
@@ -20,11 +21,11 @@ import { AlumnoService } from '../../providers/servicios/alumno.service';
   providers: [GrupoService, AlumnoService]
 })
 export class AlumnoDetallePage {
-  public alumno: Alumno;
-  public id: Number;
+  alumno: Alumno;
+  id: Number;
   grupo: Grupo;
-  public grupos: Grupo[];
-  public cambiar: Boolean;
+  grupos: Grupo[];
+  cambiar: Boolean;
   constructor(public toastCtrl: ToastController, public grupoService: GrupoService, public alumnoService: AlumnoService, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams) {
     this.alumno = navParams.get('alumno');
     this.cambiar = navParams.get('cambiar');
@@ -35,6 +36,7 @@ export class AlumnoDetallePage {
   dismiss() {
     this.viewCtrl.dismiss();
   }
+  
   obtenerGrupos() {
     this.grupoService.obtenerGrupos().subscribe(
       response => {
@@ -74,8 +76,7 @@ export class AlumnoDetallePage {
         this.alumno.grupo = grupo;
         this.alumnoService.actualizarAlumnoGrupo(this.alumno).subscribe(
           response => {
-            this.alumno = response;
-            this.lanzarToach("La operación ha sido todo un éxito");
+            this.navCtrl.push(AdminAlumnoPage, {mensaje: 'El alumno '+ this.alumno.nombre + ' se ha cambiado correctamente al grupo '+ grupo.nombre});
           }, error => {
             var capturaError = <any>error;
             var errorCodigo;

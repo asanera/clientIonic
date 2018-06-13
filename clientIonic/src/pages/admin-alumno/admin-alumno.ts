@@ -21,32 +21,38 @@ import { AlumnoDetallePageModule } from '../alumno-detalle/alumno-detalle.module
 export class AdminAlumnoPage {
 
   alumnos: Alumno[];
+  mensaje: String;
   constructor(public modalCtrl: ModalController,public toastCtrl: ToastController, public alumnoServie: AlumnoService, public navCtrl: NavController, public navParams: NavParams) {
     this.alumnos = null;
     this.obtenerAlumno();
   }
-
+  ionViewDidEnter(){
+    this.mensaje = null;
+    this.mensaje = this.navParams.get("mensaje");
+    if(this.mensaje !=null){
+      this.lanzarToach(this.mensaje);
+    }
+  }
   obtenerAlumno() {
     this.alumnoServie.obtenerAlumnos().subscribe(
       response => {
         this.alumnos = response;
         if (this.alumnos.length == 0) {
-          this.mostrarError("Actualmente no hay alumnos");
+          this.lanzarToach("Actualmente no hay alumnos");
         }
       }, error => {
         var capturaError = <any>error;
         if (capturaError != null) {
           var body = JSON.parse(error._body);
-          this.mostrarError(body.error);
-          this.mostrarError(error); 
+          this.lanzarToach(body.error);
+          this.lanzarToach(error); 
         }
       }
     );
   }
 
   cambiarGrupo(alumno){
-    let modal = this.modalCtrl.create(AlumnoDetallePage,{ alumno: alumno, cambiar: true });
-    modal.present();
+    this.navCtrl.push(AlumnoDetallePage,{ alumno: alumno, cambiar: true }); 
   }
 
   detalleAlumno(alumno){
@@ -54,7 +60,7 @@ export class AdminAlumnoPage {
     modal.present();
   }
 
-  mostrarError(mensaje) {
+  lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({
       message: mensaje,
       duration: 3000,
@@ -69,8 +75,6 @@ export class AdminAlumnoPage {
       this.obtenerAlumno();
       return;
     }
-    // set val to the value of the ev target
-
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.alumnos = this.alumnos.filter((item) => {

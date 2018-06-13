@@ -47,8 +47,8 @@ export class AdminPistaPage {
     this.navCtrl.push(PistaDetallePage, { nuevo: false, pista: pista });
   }
   borrar(pista: Pista) {
-    let modal = this.modalCtrl.create(PistaModalPage, { pista: pista});
-    modal.present();
+    this.navCtrl.push(PistaModalPage, { pista: pista});
+
   }
   anadir() {
     this.navCtrl.push(PistaDetallePage, { nuevo: true });

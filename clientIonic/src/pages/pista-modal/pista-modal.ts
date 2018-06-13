@@ -28,7 +28,6 @@ export class PistaModalPage {
     console.log(this.pista);
     this.pistaService.borrar(this.pista).subscribe(
       response => {
-        this.lanzarToach("La pista se borro correctamente");
         this.navCtrl.push(AdminPistaPage);
       }, error => {
         var capturaError = <any>error;

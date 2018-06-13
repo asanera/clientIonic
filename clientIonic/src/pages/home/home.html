@@ -27,9 +27,8 @@
             <h1>{{claseAlumno.nombre}}</h1>
             <p>{{claseAlumno.fecha}}</p>
             <ion-col text-right>
-              <button ion-button clear small (click)="detalleClase(claseAlumno)" color="danger" icon-start>
-                <ion-icon name='add'></ion-icon>
-                Detalles
+              <button ion-button clear small (click)="detalleClase(claseAlumno,false)" color="danger" icon-start>
+                <ion-icon name='information-circle'></ion-icon>
               </button>
             </ion-col>
           </ion-item>
@@ -48,9 +47,8 @@
             <p>{{claseProfesor.fecha}}
             </p>
             <ion-col text-right>
-              <button ion-button clear small (click)="detalleClase(claseProfesor)" color="danger" icon-start>
-                <ion-icon name='add'></ion-icon>
-                Detalles
+              <button ion-button clear small (click)="detalleClase(claseProfesor,true)" color="danger" icon-start>
+                <ion-icon name='information-circle'></ion-icon>
               </button>
             </ion-col>
             <ion-col text-right>
@@ -58,6 +56,13 @@
                 <ion-icon name='trash'></ion-icon>
               </button>
             </ion-col>
+            <!--
+            <ion-col text-right>
+              <button ion-button clear small (click)="eliminarClase(claseProfesor)" color="danger" icon-start>
+                <ion-icon name='ios-refresh-circle'></ion-icon>
+              </button>
+            </ion-col>
+            -->
           </ion-item>
         </div>
         <ion-fab bottom right>
@@ -78,9 +83,8 @@
             <h1>{{claseAlumno.nombre}}</h1>
             <p>{{claseAlumno.fecha}}</p>
             <ion-col text-right>
-              <button ion-button clear small (click)="detalleClase(claseAlumno)" color="danger" icon-start>
-                <ion-icon name='add'></ion-icon>
-                Detalles
+              <button ion-button clear small (click)="detalleClase(claseAlumno,false)" color="danger" icon-start>
+                <ion-icon name='information-circle'></ion-icon>
               </button>
             </ion-col>
           </ion-item>
@@ -96,9 +100,8 @@
             <h1>{{claseProfesorAntigua.nombre}}</h1>
             <p>{{claseProfesorAntigua.fecha}}</p>
             <ion-col text-right>
-              <button ion-button clear small (click)="detalleClase(claseProfesorAntigua)" color="danger" icon-start>
-                <ion-icon name='add'></ion-icon>
-                Detalles
+              <button ion-button clear small (click)="detalleClase(claseProfesorAntigua,false)" color="danger" icon-start>
+                <ion-icon name='information-circle'></ion-icon>
               </button>
             </ion-col>
           </ion-item>

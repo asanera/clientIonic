@@ -13,6 +13,7 @@
 
 
 <ion-content>
+  <h3 *ngIf="!asignaciones">Actualmente no se ha creado Asignaciones</h3>
   <ion-item *ngFor="let asignacion of asignaciones">
     <h2>Alumno: {{asignacion.alumno.nombre}} {{asignacion.alumno.apellidos}}</h2>
     <ion-note text-wrap>
@@ -22,5 +23,5 @@
   </ion-item>
 
   <button ion-button full (click)="volver()">Aceptar</button>
-
+  <button *ngIf="verActualizacion" color="secondary" ion-button full (click)="actualizar()">Actualizar</button>
 </ion-content>

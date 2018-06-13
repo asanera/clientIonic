@@ -27,18 +27,19 @@ export class ClaseDetallePage {
   identidadProfesor: Profesor;
   clase: Clase;
   eliminar: Boolean
-
+  verActualizacion: Boolean;
   constructor(public claseService: ClaseService, public toastCtrl: ToastController, public viewCtrl: ViewController, public navParams: NavParams, public navCtrl: NavController, private authService: AuthService) {
     this.identidadAlumno = authService.getAlumno();
     this.identidadProfesor = authService.getProfesor();
     this.clase = navParams.get('clase');
+    this.verActualizacion = navParams.get('verActualizacion');
     if (this.navParams.get('eliminar'))
       this.eliminar = true;
     else
       this.eliminar = false;
   }
   verAsignaciones() {
-    this.navCtrl.push(AsignacionesPage, { asignaciones: this.clase.asignaciones })
+    this.navCtrl.push(AsignacionesPage, { clase: this.clase, verActualizacion: this.verActualizacion});
   }
 
   dismiss() {

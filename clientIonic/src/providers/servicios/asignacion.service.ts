@@ -7,11 +7,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 // sirve para recoger las respuestas de las peticiones ajax al servidor
-import { Observable } from 'rxjs/Observable';
-import { Alumno } from '../../models/alumno';
-import { Grupo } from '../../models/grupo';
 import { Clase } from '../../models/clase';
-import { ClaseDetallePage } from '../../pages/clase-detalle/clase-detalle';
+
 
 /*
   Generated class for the ServiciosProvider provider.
@@ -36,6 +33,11 @@ export class AsignacionService{
   generarAsignacionesAleatorias(clase: Clase){
      //Peticion al backen
      return this.http.post(this.url + 'asignacion/random',clase,
+     this.options).map(res => res.json());
+  }
+  actualizarAsignacionesAleatorias(id: Number)  {
+     //Peticion al backend
+     return this.http.post(this.url + 'asignacion/update/'+id,null,
      this.options).map(res => res.json());
   }
  

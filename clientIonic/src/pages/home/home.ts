@@ -41,7 +41,6 @@ export class HomePage {
   ionViewDidEnter(){
     this.mensaje = null;
     this.mensaje = this.navParams.get("mensaje");
-    console.log(this.mensaje);
     if(this.mensaje !=null){
       this.lanzarToach(this.mensaje);
     }
@@ -116,7 +115,7 @@ export class HomePage {
       fecha= this.formatearFecha(clase.fecha.toString());
       if (clase.asignaciones.length != 0) {
         asignaciones = clase.asignaciones;
-        grupo = clase.asignaciones[0].alumno.grupo.nombre;
+        grupo = clase.asignaciones[0].alumno.grupo;
       }
       else
         grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
@@ -145,7 +144,7 @@ export class HomePage {
       fecha = this.formatearFecha(clase.fecha.toString());
       if (clase.asignaciones.length != 0) {
         asignaciones = clase.asignaciones;
-        grupo = clase.asignaciones[0].alumno.grupo.nombre;
+        grupo = clase.asignaciones[0].alumno.grupo;   
       }
       else {
         grupo = new Grupo(-1, "Actualmente no hay asignaciones", null);
@@ -241,7 +240,11 @@ export class HomePage {
   formatearFecha(fecha: string){
     let date: Date = new Date(fecha);
     let fechaNueva: String;
-    fechaNueva = date.getUTCDate() + "/"+(date.getMonth()+1)+"/"+date.getFullYear() + " " + date.getHours() +":"+date.getMinutes();
+    if( date.getMinutes() == 0){
+      fechaNueva = date.getUTCDate() + "/"+(date.getMonth()+1)+"/"+date.getFullYear() + " " + date.getHours() +":"+ date.getMinutes()+'0';
+    }else{
+      fechaNueva = date.getUTCDate() + "/"+(date.getMonth()+1)+"/"+date.getFullYear() + " " + date.getHours() +":"+ date.getMinutes();
+    }
     return fechaNueva;
   }
   obtenerClasesAlumno(clases: Clase[]) {
@@ -276,8 +279,8 @@ export class HomePage {
     return clasesAlumno;
   }
 
-  detalleClase(clase) {
-    this.navCtrl.push(ClaseDetallePage, { clase: clase });
+  detalleClase(clase, verActualizacion:Boolean) {
+    this.navCtrl.push(ClaseDetallePage, { clase: clase, verActualizacion: verActualizacion });
   }
   anadir() {
     this.navCtrl.push(ClasesAnadirPage, { nuevo: true });
@@ -291,7 +294,6 @@ export class HomePage {
     }
     // if the value is an empty string don't filter the items
     if (this.identidadAlumno) {
-
       if (this.segment == 'proximas') {
         if (val && val.trim() != '') {
           this.clasesAlumno = this.clasesAlumno.filter((item) => {
@@ -330,7 +332,6 @@ export class HomePage {
     toast.present();
   }
   eliminarClase(clase: Clase){
-    let modal = this.modalCtrl.create(ClaseDetallePage, { clase: clase, eliminar:true });
-    modal.present();
+   this.navCtrl.push(ClaseDetallePage, { clase: clase, eliminar:true });
   }
 }

@@ -99,7 +99,6 @@ export class ClasesAnadirPage {
         return;
       }
     });
-    console.log(this.clase);
   }
   validar(): Boolean {
     if (this.idPista == null) {
@@ -173,11 +172,10 @@ export class ClasesAnadirPage {
   }
 
   crearAsignacionesAleatoria(){
-    console.log(this.clase);
     this.asignacionService.generarAsignacionesAleatorias(this.clase).subscribe(
       response => {
         this.clase.asignaciones = response;
-        this.navCtrl.push(AsignacionesPage, {asignaciones: this.clase.asignaciones});
+        this.navCtrl.push(AsignacionesPage, {clase: this.clase});
       }, error => {
         let capturaError = <any>error;
         let errorCodigo;
@@ -193,5 +191,4 @@ export class ClasesAnadirPage {
       }
     );
   }
-
 }

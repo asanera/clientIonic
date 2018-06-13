@@ -21,32 +21,39 @@ export class AdminGrupoPage {
 
 
   grupos: Grupo[];
+  mensaje: String;
   constructor(public modalCtrl: ModalController, public toastCtrl: ToastController, public grupoService: GrupoService, public navCtrl: NavController, public navParams: NavParams) {
     this.grupos = null;
     this.obtenerGrupos();
   }
-
+  ionViewDidEnter(){
+    this.mensaje = null;
+    this.mensaje = this.navParams.get("mensaje");
+    if(this.mensaje !=null){
+      this.lanzarToach(this.mensaje);
+    }
+  }
   obtenerGrupos() {
     this.grupoService.obtenerGrupos().subscribe(
       response => {
         this.grupos = response;
         if (this.grupos.length == 0) {
-          this.mostrarError("Actualmente no hay grupos");
+          this.lanzarToach("Actualmente no hay grupos");
         }
       }, error => {
         var capturaError = <any>error;
         if (capturaError != null) {
           var body = JSON.parse(error._body);
-          this.mostrarError(body.error);
-          this.mostrarError(error);
+          this.lanzarToach(body.error);
+          this.lanzarToach(error);
         }
       }
     );
   }
 
   borrarGrupo(grupo) {
-    let modal = this.modalCtrl.create(GrupoDetalleAlumnoPage, { grupo: grupo, mostrarAlumnos: false });
-    modal.present();
+   this.navCtrl.push(GrupoDetalleAlumnoPage, { grupo: grupo, mostrarAlumnos: false });
+    
   }
   grupoAlumnos(id) {
     let modal = this.modalCtrl.create(GrupoDetalleAlumnoPage, { idGrupo: id, mostrarAlumnos: true });
@@ -59,7 +66,7 @@ export class AdminGrupoPage {
     this.navCtrl.push(GrupoPage,{nuevo:false, grupo:grupo});
   }
 
-  mostrarError(mensaje) {
+  lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({
       message: mensaje,
       duration: 3000,

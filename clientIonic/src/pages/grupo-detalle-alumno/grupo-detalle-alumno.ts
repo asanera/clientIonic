@@ -59,11 +59,9 @@ export class GrupoDetalleAlumnoPage {
     this.viewCtrl.dismiss();
   }
   borrarGrupo() {
-
     this.grupoService.borrarGrupo(this.grupo).subscribe(
       response => {
-        this.navCtrl.push(AdminGrupoPage);
-        return true;
+        this.navCtrl.push(AdminGrupoPage,{mensaje: 'El grupo '+this.grupo.nombre +' se ha borrado correctamente'});
       }, error => {
         let capturaError = <any>error;
         let errorCodigo;

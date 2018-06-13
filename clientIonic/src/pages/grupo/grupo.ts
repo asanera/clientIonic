@@ -32,14 +32,13 @@ export class GrupoPage {
   }
 
   guardarGrupo() {
-    console.log(this.grupo);
     this.grupoService.guardarGrupo(this.grupo).subscribe(
       response => {
         let grupo = response;
         if (this.grupo == null)
           this.lanzarToast("Lo sentimos, el grupo no se ha guarado correctamente");
         else
-          this.lanzarToast("El grupo se ha guardado correctamente");
+         this.navCtrl.push(AdminGrupoPage,{mensaje: 'El grupo '+ this.grupo.nombre + ' se ha creado correctamente'});
       }, error => {
         let capturaError = <any>error;
         let errorCodigo;
