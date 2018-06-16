@@ -11,6 +11,7 @@ import { ClasesAnadirPage } from '../clases-anadir/clases-anadir';
 import { Grupo } from '../../models/grupo';
 import { Caballo } from '../../models/caballo';
 import { Asignacion } from '../../models/asignacion';
+import { AsignacionBorrarAlumnoPage } from '../asignacion-borrar-alumno/asignacion-borrar-alumno';
 
 @Component({
   selector: 'page-home',
@@ -227,6 +228,7 @@ export class HomePage {
         }
       }
       clasesAlumnoPasada.push({
+        id: clase.id,
         nombre: nombre,
         especialidad: especialidad,
         pista: pista,
@@ -268,6 +270,7 @@ export class HomePage {
         }
       }
       clasesAlumno.push({
+        id: clase.id,
         nombre: nombre,
         especialidad: especialidad,
         pista: pista,
@@ -322,6 +325,10 @@ export class HomePage {
         }
       }
     }
+  }
+  eliminarAsignacion(idClase:Number, idAlumno:Number) {
+    console.log(idClase);
+    this.navCtrl.push(AsignacionBorrarAlumnoPage,{idClase: idClase, idAlumno: idAlumno});
   }
   lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({

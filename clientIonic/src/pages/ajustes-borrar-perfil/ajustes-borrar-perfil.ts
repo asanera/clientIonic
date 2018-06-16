@@ -5,6 +5,7 @@ import { Profesor } from '../../models/profesor';
 import { AlumnoService } from '../../providers/servicios/alumno.service';
 import { ProfesorService } from '../../providers/servicios/profesor.service';
 import { LoginPage } from '../login/login';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the AjustesBorrarPerfilPage page.
@@ -90,7 +91,7 @@ export class AjustesBorrarPerfilPage {
     localStorage.removeItem('identidadAlumno');
     localStorage.removeItem('identidadProfesor');
     localStorage.clear();
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.push(TabsPage);
   }
   dismiss() {
     this.viewCtrl.dismiss();

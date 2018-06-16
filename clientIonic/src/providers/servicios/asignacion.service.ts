@@ -40,6 +40,11 @@ export class AsignacionService{
      return this.http.post(this.url + 'asignacion/update/'+id,null,
      this.options).map(res => res.json());
   }
+  eliminarAsignacion(idClase: Number, idAlumno: Number) {
+    //Peticion al backend
+    return this.http.get(this.url + 'asignacion/baja/clase/'+idClase+'/alumno/'+idAlumno,
+    this.options).map(res => res.json());
+  }
  
   
 }

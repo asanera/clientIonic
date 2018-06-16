@@ -36,6 +36,7 @@ import { AdminCaballoPage } from '../pages/admin-caballo/admin-caballo';
 import { CaballoDetallePage } from '../pages/caballo-detalle/caballo-detalle';
 import { ModalCaballoPage } from '../pages/modal-caballo/modal-caballo';
 import { AjustesBorrarPerfilPage } from '../pages/ajustes-borrar-perfil/ajustes-borrar-perfil';
+import { AsignacionBorrarAlumnoPage } from '../pages/asignacion-borrar-alumno/asignacion-borrar-alumno';
 
 
 
@@ -69,7 +70,8 @@ import { AjustesBorrarPerfilPage } from '../pages/ajustes-borrar-perfil/ajustes-
     AdminCaballoPage,
     CaballoDetallePage,
     ModalCaballoPage,
-    AjustesBorrarPerfilPage
+    AjustesBorrarPerfilPage,
+    AsignacionBorrarAlumnoPage
   ],
   imports: [
     BrowserModule,
@@ -107,7 +109,8 @@ import { AjustesBorrarPerfilPage } from '../pages/ajustes-borrar-perfil/ajustes-
     AdminCaballoPage,
     CaballoDetallePage,
     ModalCaballoPage,
-    AjustesBorrarPerfilPage
+    AjustesBorrarPerfilPage,
+    AsignacionBorrarAlumnoPage
   ],
   providers: [
     StatusBar,

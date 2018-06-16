@@ -57,7 +57,7 @@ export class AlumnoDetallePage {
   lanzarToach(mensaje) {
     let toast = this.toastCtrl.create({
       message: mensaje,
-      duration: 3000,
+      duration: 6000,
       dismissOnPageChange: true
     });
     toast.present();
@@ -68,8 +68,7 @@ export class AlumnoDetallePage {
     if(this.id==null){
       this.lanzarToach("Por favor, debes de seleccionar un grupo");
       return false;
-    }
-      
+    }   
     this.grupoService.obtenerGrupoById(this.id).subscribe(
       response => {
         grupo = response;
